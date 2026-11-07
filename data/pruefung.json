@@ -335,7 +335,8 @@
   "Von jeder geladenen amtlichen Datei wird eine Prüfsumme (SHA-256) gespeichert; damit lässt sich zeigen, dass sich eine Quelle nicht unbemerkt geändert hat."
  ],
  "offen": [
-  "Die erklärenden Texte (Lesehilfe, Abschnitt 4, Fragen) hat noch keine fachkundige Person außerhalb des Projekts gelesen.",
+  "Alle Gegenproben auf dieser Seite hat die KI selbst durchgeführt und ausgewertet. Ein Mensch hat sie noch nicht nachgeprüft.",
+  "Weder die Zahlen noch die erklärenden Texte (Lesehilfe, Abschnitt 4, Fragen) hat bisher eine fachkundige Person geprüft.",
   "Sondervermögen vor 2023 und als Ist vor 2025 sind in den amtlichen Dateien nicht enthalten; für diese Jahre gibt es nur das Gesamtbild von Eurostat.",
   "Für 2025 gibt es noch keine Eurostat-Werte zu den Aufgabenbereichen und keine NATO-Zahl für Deutschland.",
   "Preise und Haushaltsausgaben werden von Hand nachgetragen und nicht automatisch abgeglichen."

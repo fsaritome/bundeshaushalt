@@ -2,6 +2,8 @@
 
 Stand: 7. November 2026. Alle Zahlen in Mrd. €. Ziel: Jede Zahlenreihe der Seite einmal mit einer Quelle vergleichen, die nicht unsere Rechnung ist.
 
+**Wer geprüft hat:** Diese Gegenproben hat die KI (Claude, Anthropic) durchgeführt und ausgewertet, die auch die Seite erstellt hat. Ein Mensch hat sie noch nicht nachgeprüft. Die Seite ist ein Experiment, ob eine KI belastbare Finanzdaten aufbereiten kann; Nachprüfungen von Fachleuten sind ausdrücklich erwünscht.
+
 ## Ergebnis auf einen Blick
 
 | Bereich | Vergleich mit | Ergebnis |
