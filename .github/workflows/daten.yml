@@ -1,8 +1,12 @@
 name: Daten aktualisieren
 
-# Lädt monatlich die amtlichen Haushaltsdateien (bundeshaushalt.de) und das Medianeinkommen (Eurostat),
-# rechnet die Dateien in data/ neu und öffnet bei Änderungen einen Pull Request zur Prüfung.
+# Monatlich: Medianeinkommen (Eurostat) und, soweit erreichbar, die amtlichen Haushaltsdateien
+# (bundeshaushalt.de) neu berechnen und bei Änderungen einen Pull Request zur Prüfung öffnen.
 # Veröffentlicht wird erst, wenn jemand den Pull Request zusammenführt.
+#
+# Hinweis: bundeshaushalt.de beantwortet Anfragen von GitHub-Servern derzeit mit HTTP 503.
+# Dann wird der Haushaltsteil übersprungen (Warnung im Lauf) und muss lokal mit
+# pipeline/aktualisieren.sh aktualisiert werden. Echte Datenfehler lassen den Lauf scheitern.
 
 on:
   schedule:
@@ -25,7 +29,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Haushaltsdaten neu berechnen
-        run: python3 pipeline/haushalt.py
+        run: |
+          set +e
+          python3 pipeline/haushalt.py
+          rc=$?
+          set -e
+          if [ "$rc" -eq 3 ]; then
+            echo "::warning title=bundeshaushalt.de nicht erreichbar::Die Haushaltsdaten wurden nicht abgeglichen. Lokal ausführen: bash pipeline/aktualisieren.sh"
+            printf '\nHaushaltsdaten: bundeshaushalt.de war vom GitHub-Server aus nicht erreichbar, nicht abgeglichen.\n' >> pipeline/bericht.md
+          elif [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
 
       - name: Medianeinkommen von Eurostat
         run: python3 pipeline/median.py
@@ -34,6 +48,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          cat pipeline/bericht.md >> "$GITHUB_STEP_SUMMARY" || true
           if git diff --quiet -- data; then
             echo "Keine Änderungen an den Daten."
             exit 0

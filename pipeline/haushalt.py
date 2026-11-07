@@ -34,6 +34,14 @@ def fail(msg):
     sys.exit(1)
 
 
+NICHT_ERREICHBAR = 3  # Exit-Code: Quelle nicht erreichbar (kein Datenfehler)
+
+
+def fail_net(msg):
+    print("NICHT ERREICHBAR: " + msg, file=sys.stderr)
+    sys.exit(NICHT_ERREICHBAR)
+
+
 def fetch(rel, probe=False):
     """Lädt eine Datei (mit Zwischenspeicher), gibt (bytes, sha256) zurück, None wenn es sie nicht gibt.
     probe=True: Suche nach noch nicht veröffentlichten Jahren; dauerhafte Serverfehler gelten dann als 'noch nicht da'."""
@@ -58,12 +66,12 @@ def fetch(rel, probe=False):
                 if probe:
                     print(f"  WARNUNG: {rel}: HTTP {e.code}, als nicht vorhanden behandelt", file=sys.stderr)
                     return None
-                fail(f"{rel}: HTTP {e.code} von bundeshaushalt.de (nach {attempt + 1} Versuchen)")
+                fail_net(f"{rel}: HTTP {e.code} von bundeshaushalt.de (nach {attempt + 1} Versuchen)")
             except urllib.error.URLError as e:
                 if attempt < 4:
                     time.sleep(15 * (attempt + 1))
                     continue
-                fail(f"{rel}: nicht erreichbar ({e.reason})")
+                fail_net(f"{rel}: {e.reason}")
         # Die Website liefert für fehlende Dateien teils eine HTML-Seite statt 404.
         if body[:200].lstrip().lower().startswith((b"<!doctype html", b"<html")):
             return None
@@ -177,6 +185,9 @@ def einnahmen(titel):
 def discover(cfg):
     """Findet neue Jahre nach den Namensmustern, die seit 2024 gelten."""
     years = {int(y): dict(v) for y, v in cfg["jahre"].items()}
+    # Erst prüfen, ob die Quelle überhaupt erreichbar ist (eine sicher vorhandene Datei),
+    # damit ein gesperrter Zugang nicht als "neues Jahr noch nicht veröffentlicht" missverstanden wird.
+    fetch(years[max(years)]["soll"])
     nxt = max(years) + 1
     while True:
         soll_rel = cfg["muster"]["soll"].format(jahr=nxt)
@@ -198,13 +209,14 @@ def build():
     years = discover(CFG)
     themen, jahre, belege = [], [], []
     for y, src in years.items():
-        got = fetch(src["soll"])
-        if got is None:
-            fail(f"{y}: Soll-Datei nicht gefunden: {src['soll']}")
-        soll = read_soll(got[0])
-        belege.append({"jahr": y, "art": "Soll (Haushaltsplan)", "url": BASE + src["soll"], "sha256": got[1]})
         ist = None
-        if "ist" in src:
+        if "ist" not in src:
+            got = fetch(src["soll"])
+            if got is None:
+                fail(f"{y}: Soll-Datei nicht gefunden: {src['soll']}")
+            soll = read_soll(got[0])
+            belege.append({"jahr": y, "art": "Soll (Haushaltsplan)", "url": BASE + src["soll"], "sha256": got[1]})
+        else:
             got_i = fetch(src["ist"])
             if got_i is None:
                 fail(f"{y}: Ist-Datei nicht gefunden: {src['ist']}")

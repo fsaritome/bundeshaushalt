@@ -36,12 +36,20 @@ Hinweise:
 
 ## Daten aktualisieren
 
-Die GitHub Action `.github/workflows/daten.yml` läuft am 5. jedes Monats (und per Knopf unter *Actions → Daten aktualisieren → Run workflow*). Sie
+Zwei Skripte rechnen die Daten aus den amtlichen Quellen neu:
 
-1. lädt die amtlichen Haushaltsdateien von bundeshaushalt.de (`pipeline/haushalt.py`, Quellen in `pipeline/quellen.json`; neue Jahre werden über das Dateimuster `HH_<Jahr>_ALL.csv` bzw. `rechnung_<Jahr>.xml` gefunden),
-2. lädt das Medianeinkommen über die Eurostat-Schnittstelle (`pipeline/median.py`),
-3. bricht ab, wenn ein Titel keinem Thema zugeordnet werden kann oder die Kontrollsumme 2026 nicht stimmt,
-4. öffnet bei Änderungen einen Pull Request mit einer Liste der geänderten Werte. Online geht erst, was jemand prüft und zusammenführt.
+- `pipeline/haushalt.py`: Haushaltsdateien von bundeshaushalt.de (Quellen in `pipeline/quellen.json`; neue Jahre werden über das Dateimuster `HH_<Jahr>_ALL.csv` bzw. `rechnung_<Jahr>.xml` gefunden). Bricht ab, wenn ein Titel keinem Thema zugeordnet werden kann oder die Kontrollsumme 2026 nicht stimmt.
+- `pipeline/median.py`: Medianeinkommen über die Eurostat-Schnittstelle.
+
+Bei Änderungen entsteht ein Pull Request mit einer Liste der geänderten Werte. Online geht erst, was jemand prüft und zusammenführt.
+
+**Haushaltsdaten lokal:** bundeshaushalt.de weist Anfragen von GitHub-Servern ab (HTTP 503). Deshalb lokal ausführen, z. B. nach Veröffentlichung einer neuen Haushaltsrechnung oder eines neuen Haushalts (braucht git, Python 3 und die GitHub-CLI `gh`):
+
+```
+bash pipeline/aktualisieren.sh
+```
+
+**Automatisch auf GitHub:** Die Action `.github/workflows/daten.yml` läuft am 5. jedes Monats (und per Knopf unter *Actions → Daten aktualisieren → Run workflow*). Sie gleicht das Medianeinkommen ab und versucht die Haushaltsdaten; ist bundeshaushalt.de nicht erreichbar, steht eine Warnung im Lauf, Datenfehler lassen ihn scheitern. Damit sie Pull Requests öffnen darf, muss unter *Settings → Actions → General* „Allow GitHub Actions to create and approve pull requests“ aktiviert sein.
 
 Verbraucherpreise (`preise.json`, `preise_kategorien.json`) und Haushaltsausgaben (`konsum.json`) werden von Hand gepflegt: Destatis stellt sie maschinenlesbar nur über eine Schnittstelle mit Anmeldung bereit.
 
