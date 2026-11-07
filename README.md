@@ -37,6 +37,10 @@ Hinweise:
 - **Nicht enthalten:** Länder und Gemeinden, die Sozialversicherungen selbst (nur die Bundeszuschüsse sind enthalten) und Leistungen über die Steuer (Kindergeld, Kinderfreibetrag, Ehegattensplitting).
 - Das Kindergeld erscheint nicht als Ausgabe, weil es über die Steuer verrechnet wird. 2020 gibt es einen Bruch in der Einkommensreihe.
 
+## Gegenprobe
+
+[`PRUEFUNG.md`](PRUEFUNG.md) vergleicht die Zahlen der Seite mit unabhängigen Quellen: der Funktionen-Ansicht von bundeshaushalt.de, den Abschlusszahlen des BMF, Destatis (Defizit), NATO (Verteidigung) und der Deutschen Rentenversicherung. Dabei gefundene Fehler und bekannte Abweichungen sind dort aufgeführt.
+
 ## Daten aktualisieren
 
 Zwei Skripte rechnen die Daten aus den amtlichen Quellen neu:

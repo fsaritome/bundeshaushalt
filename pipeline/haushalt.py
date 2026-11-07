@@ -68,9 +68,12 @@ def fetch(rel, probe=False):
                     return None
                 fail_net(f"{rel}: HTTP {e.code} von bundeshaushalt.de (nach {attempt + 1} Versuchen)")
             except urllib.error.URLError as e:
-                if attempt < 4:
+                if attempt < (1 if probe else 4):
                     time.sleep(15 * (attempt + 1))
                     continue
+                if probe:
+                    print(f"  WARNUNG: {rel}: {e.reason}, als nicht vorhanden behandelt", file=sys.stderr)
+                    return None
                 fail_net(f"{rel}: {e.reason}")
         # Die Website liefert für fehlende Dateien teils eine HTML-Seite statt 404.
         if body[:200].lstrip().lower().startswith((b"<!doctype html", b"<html")):

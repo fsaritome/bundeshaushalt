@@ -78,16 +78,24 @@ def einnahme_typ(titel, text):
 
 def leer(jahr, wert, kap, name, art):
     return {"jahr": jahr, "wert": wert, "kapitel": kap, "name": name, "art": art, "ausgaben": 0.0, "an_sv": 0.0,
+            "an_ruecklage": 0.0, "tilgung": 0.0,
             "kredite": 0.0, "vom_kern": 0.0, "von_sv": 0.0, "eigene": 0.0, "ruecklage": 0.0}
 
 
 def add(rows, key, base, ea, titel, text, betrag_tsd):
+    """Ausgaben: alle Ausgabetitel. Davon getrennt ausgewiesen, weil sie kein Geldabfluss für Aufgaben sind
+    (wie in der Abgrenzung des BMF): Zuführungen an Rücklagen (Obergruppe 91) und Tilgungen (Obergruppe 59);
+    außerdem Zahlungen an andere Sondervermögen (sonst doppelt gezählt)."""
     r = rows.setdefault(key, base())
     text = norm(text)
     v = betrag_tsd / 1e6  # Mrd. €
     if ea == "A":
         r["ausgaben"] += v
-        if an_sv_text(text):
+        if titel.startswith("91"):
+            r["an_ruecklage"] += v
+        elif titel.startswith("59"):
+            r["tilgung"] += v
+        elif an_sv_text(text):
             r["an_sv"] += v
     else:
         r[einnahme_typ(titel, text)] += v
@@ -164,7 +172,7 @@ def main():
             rows += from_rechnung(y, src["ist"], names).values()
     rows = [r for r in rows if abs(r["ausgaben"]) > 0.0005 or abs(r["kredite"]) > 0.0005]
     for r in rows:
-        for k in ("ausgaben", "an_sv", "kredite", "vom_kern", "von_sv", "eigene", "ruecklage"):
+        for k in ("ausgaben", "an_sv", "an_ruecklage", "tilgung", "kredite", "vom_kern", "von_sv", "eigene", "ruecklage"):
             r[k] = round(r[k], 3)
     rows.sort(key=lambda r: (r["jahr"], r["wert"], r["art"], -r["ausgaben"]))
     check_transfers(rows)

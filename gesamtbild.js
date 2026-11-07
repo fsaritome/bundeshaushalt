@@ -20,7 +20,7 @@
       const vorhanden = new Set(sv.map((r) => r.jahr + r.wert));
       SV_SPALTEN.filter((s) => vorhanden.has(s.jahr + s.wert)).forEach((s) => {
         const rows = sv.filter((r) => r.jahr === s.jahr && r.wert === s.wert);
-        const fonds = rows.filter((r) => r.art === 'sondervermoegen').map((r) => ({ ...r, netto: r.ausgaben - r.an_sv }))
+        const fonds = rows.filter((r) => r.art === 'sondervermoegen').map((r) => ({ ...r, netto: r.ausgaben - r.an_sv - (r.an_ruecklage || 0) - (r.tilgung || 0) }))
           .filter((r) => r.netto > 0.0005).sort((a, b) => b.netto - a.netto);
         fonds.forEach((f) => groesse.set(f.kapitel, Math.max(groesse.get(f.kapitel) || 0, f.netto)));
         const j = jahre.find((x) => x.jahr === s.jahr) || {};
@@ -84,7 +84,7 @@
   const SV_KAP = { verteidigung: '1491', klima: '6092', verkehr: '6093' };
   const KURZ = {
     familie: 'Kindergeld, Kinderfreibetrag und Ehegattensplitting laufen über die Steuer und fehlen hier; Kitas zahlen vor allem Länder und Gemeinden.',
-    rente: 'Nur die Zuschüsse des Bundes, nicht die Renten insgesamt (die zahlt die Rentenversicherung).',
+    rente: 'Zuschüsse und Beiträge des Bundes an die Rentenversicherung (u. a. für Kindererziehungszeiten), Erstattung der Grundsicherung im Alter, Knappschaft und Alterssicherung der Landwirte; nicht die Renten insgesamt (die zahlt die Rentenversicherung).',
     verwaltung: 'Enthält die Pensionen früherer Bundesbeamter, darunter den Zuschuss an die Postbeamtenversorgungskasse.',
     gesundheit: 'Nur Ausgaben des Bundes; Kranken- und Pflegeversicherung sind eigene Haushalte.',
     grundsicherung: 'Enthält auch Leistungen für Kinder in Haushalten mit Bürgergeld.',
@@ -168,7 +168,9 @@
     const teile = [['über Kredite', f.kredite], ['aus Rücklage', f.ruecklage], ['eigene Einnahmen', f.eigene], ['aus dem Kernhaushalt', f.vom_kern], ['von anderen Sondervermögen', f.von_sv]]
       .filter(([, v]) => Math.abs(v) >= 0.0005).map(([n, v]) => n + ' ' + mrd(v));
     el.append(mk('b', '', kurz(f.name) + ', ' + s.label + ': ' + mrd(f.netto)));
-    if (f.an_sv) el.append(document.createTextNode(' (ohne ' + mrd(f.an_sv) + ' an andere Sondervermögen)'));
+    const ohne = [[f.an_sv, 'an andere Sondervermögen'], [f.an_ruecklage, 'Zuführung an Rücklage'], [f.tilgung, 'Tilgung']]
+      .filter(([v]) => v && Math.abs(v) >= 0.0005).map(([v, n]) => mrd(v) + ' ' + n);
+    if (ohne.length) el.append(document.createTextNode(' (ohne ' + ohne.join(', ') + ')'));
     if (teile.length) el.append(document.createTextNode(' · finanziert ' + teile.join(', ')));
     el.append(document.createTextNode(' · ' + pf.format(f.netto / s.kern) + ' des Kernhaushalts'));
   });
