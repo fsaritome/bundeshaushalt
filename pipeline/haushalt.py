@@ -34,8 +34,9 @@ def fail(msg):
     sys.exit(1)
 
 
-def fetch(rel):
-    """Lädt eine Datei (mit Zwischenspeicher), gibt (bytes, sha256) zurück, None wenn es sie nicht gibt."""
+def fetch(rel, probe=False):
+    """Lädt eine Datei (mit Zwischenspeicher), gibt (bytes, sha256) zurück, None wenn es sie nicht gibt.
+    probe=True: Suche nach noch nicht veröffentlichten Jahren; dauerhafte Serverfehler gelten dann als 'noch nicht da'."""
     CACHE.mkdir(parents=True, exist_ok=True)
     local = CACHE / rel.replace("/", "_")
     if not local.exists():
@@ -49,11 +50,14 @@ def fetch(rel):
             except urllib.error.HTTPError as e:
                 if e.code == 404:
                     return None
-                if e.code in (429, 500, 502, 503, 504) and attempt < 4:
+                if e.code in (429, 500, 502, 503, 504) and attempt < (1 if probe else 4):
                     wait = 15 * (attempt + 1)
                     print(f"  {rel}: HTTP {e.code}, neuer Versuch in {wait} s", file=sys.stderr)
                     time.sleep(wait)
                     continue
+                if probe:
+                    print(f"  WARNUNG: {rel}: HTTP {e.code}, als nicht vorhanden behandelt", file=sys.stderr)
+                    return None
                 fail(f"{rel}: HTTP {e.code} von bundeshaushalt.de (nach {attempt + 1} Versuchen)")
             except urllib.error.URLError as e:
                 if attempt < 4:
@@ -176,14 +180,14 @@ def discover(cfg):
     nxt = max(years) + 1
     while True:
         soll_rel = cfg["muster"]["soll"].format(jahr=nxt)
-        if fetch(soll_rel) is None:
+        if fetch(soll_rel, probe=True) is None:
             break
         years[nxt] = {"soll": soll_rel}
         nxt += 1
     for y in years:
         if "ist" not in years[y]:
             ist_rel = cfg["muster"]["ist"].format(jahr=y)
-            if y < date.today().year and fetch(ist_rel) is not None:
+            if y < date.today().year and fetch(ist_rel, probe=True) is not None:
                 years[y]["ist"] = ist_rel
     return dict(sorted(years.items()))
 
