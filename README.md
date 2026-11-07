@@ -41,6 +41,10 @@ Hinweise:
 
 [`PRUEFUNG.md`](PRUEFUNG.md) vergleicht die Zahlen der Seite mit unabhängigen Quellen: der Funktionen-Ansicht von bundeshaushalt.de, den Abschlusszahlen des BMF, Destatis (Defizit), NATO (Verteidigung) und der Deutschen Rentenversicherung. Dabei gefundene Fehler und bekannte Abweichungen sind dort aufgeführt.
 
+Auf der Seite selbst zeigt Abschnitt 9 „Transparenz“ dasselbe: Gegenproben, Neuberechnung aller Themen, Korrekturen mit Datum, automatische Prüfungen, offene Punkte sowie Datenschutz und Datensicherheit. Die Inhalte stehen in `data/pruefung.json`; nach einer neuen Gegenprobe oder Korrektur dort ergänzen und das Datum `stand` anpassen.
+
+**Fehler melden:** über [GitHub Issues](https://github.com/fsaritome/bundeshaushalt/issues/new?template=fehler.md) mit der Vorlage „Fehler oder Hinweis zu den Zahlen“. Jede Korrektur kommt mit Datum in `data/pruefung.json`.
+
 ## Daten aktualisieren
 
 Zwei Skripte rechnen die Daten aus den amtlichen Quellen neu:

@@ -165,6 +165,18 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 .st .sv-row { grid-template-columns: 5.6rem 1fr; }
 .st .sv-kern { height: 8px; margin-top: 3px; }
 .st .sv-kern-label { font-size: .75rem; color: var(--color-fg-muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.st .beta { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: -4px 0 14px; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
+.st .badge { display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: .02em; padding: 2px 8px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.st .badge.ok { color: var(--color-ok); }
+.st .badge.fix { color: var(--color-accent); }
+.st .badge.mid { color: var(--color-fg-muted); }
+.st .gp { padding: 12px 0; border-bottom: 1px solid var(--color-border-line); }
+.st .gp:last-child { border-bottom: 0; }
+.st .gp-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: space-between; }
+.st .gp-quelle { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 4px 0 6px; }
+.st .gp-tab td:first-child, .st .gp-tab th:first-child { min-width: 12rem; white-space: normal; }
+.st .gp-tab td { white-space: normal; }
+.st code { font-size: .85em; }
 .st .foot { margin-top: var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .st .pos { color: var(--color-ok); }
 .st .tablewrap { overflow: auto; max-height: 36rem; }
@@ -201,6 +213,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       <a href="#tabelle">Alle Zahlen</a>
       <a href="#trends">Trends</a>
       <a href="#fragen">Fragen</a>
+      <a href="#transparenz">Transparenz</a>
       <a href="#lizenzen">Quellen</a>
     </nav>
     <div class="theme" role="group" aria-label="Darstellung">
@@ -215,6 +228,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 <div class="st" lang="de">
   <section class="hero">
     <div class="eyebrow">Bundeshaushalt 2015–2026 · amtliche Daten</div>
+    <p class="beta"><span class="badge mid">Beta</span> Stand der Prüfung: <b data-draw="datenstand" data-source="pruefung">—</b> · <a href="#transparenz">Wie wir geprüft haben</a> · <a href="https://github.com/fsaritome/bundeshaushalt/issues/new?template=fehler.md" target="_blank" rel="noopener">Fehler gefunden? Bitte melden</a></p>
     <h1>Wohin fließt das Geld des Bundes?</h1>
     <p class="about">Diese Seite macht den Bundeshaushalt nachprüfbar. Sie zeigt alle Ausgaben des Bundes von 2015 bis 2026, geplant und tatsächlich, aufgeteilt nach Themen, und stellt sie dem mittleren Einkommen, den Preisen und den Ausgaben der Haushalte gegenüber. Alle Zahlen stammen aus amtlichen Quellen (Bundesfinanzministerium, Statistisches Bundesamt, Eurostat) und sind unten einzeln verlinkt.</p>
     <p class="credit">Gestaltet von Ferit Sari Tomé zusammen mit Claude</p>
@@ -398,7 +412,57 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     </ol>
   </div>
 
-  <h2 class="sec" id="lizenzen"><span class="num">09</span>Quellen und Lizenzen</h2>
+  <h2 class="sec" id="transparenz"><span class="num">09</span>Transparenz: Prüfung, Korrekturen, Datenschutz</h2>
+  <p class="sec-sub">Wie die Zahlen entstehen, womit wir sie verglichen haben, welche Fehler wir gefunden haben und welche Daten beim Besuch dieser Seite anfallen.</p>
+  <div class="card">
+    <h3>Wer diese Seite gemacht hat und wie</h3>
+    <p class="about">Diese Seite hat Ferit Sari Tomé zusammen mit Claude, einem KI-Assistenten von Anthropic, gestaltet und programmiert. <b>Die Zahlen stammen nicht aus der KI:</b> Offene Skripte lesen sie aus den amtlichen Dateien und Schnittstellen (Bundesfinanzministerium, Eurostat, Destatis), jede Zahl ist unten mit ihrer Quelle verlinkt, und automatische Datenaktualisierungen gehen erst nach Prüfung durch einen Menschen online. Die Seite ist ein unabhängiges Projekt; keine der genannten Stellen hat sie herausgegeben oder unterstützt.</p>
+    <p class="note">Die Seite ist im <b>Beta</b>-Stadium: Die Zahlen sind geprüft (siehe unten), die erklärenden Texte hat aber noch keine fachkundige Person außerhalb des Projekts gelesen. Hinweise sind ausdrücklich erwünscht: <a href="https://github.com/fsaritome/bundeshaushalt/issues/new?template=fehler.md" target="_blank" rel="noopener">Fehler melden auf GitHub</a> (öffentlich, braucht ein kostenloses GitHub-Konto).</p>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Gegenprobe mit unabhängigen Quellen</h3>
+    <p class="note">Stand: <span data-draw="datenstand" data-source="pruefung">—</span>. Jede Zahlenreihe der Seite wurde einmal mit einer Quelle verglichen, die nicht unsere eigene Rechnung ist. Mrd. €, soweit nicht anders angegeben.</p>
+    <div data-draw="gegenproben" data-source="pruefung"></div>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Alle Themen ein zweites Mal berechnet</h3>
+    <p class="note">Die 19 Themen wurden unabhängig von den Dateien dieser Seite aus der Funktionen-Ansicht von bundeshaushalt.de neu berechnet (gleiche Zuordnung, Mrd. €).</p>
+    <div class="tablewrap" data-draw="themenapi" data-source="pruefung"></div>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Korrekturen</h3>
+    <p class="note">Was wir an der veröffentlichten Seite geändert haben, weil es falsch oder missverständlich war.</p>
+    <ul class="trendlist" data-draw="korrekturen" data-source="pruefung"></ul>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Automatische Prüfungen bei jeder Aktualisierung</h3>
+    <ul class="trendlist" data-draw="automatisch" data-source="pruefung"></ul>
+    <p class="note">Den Code dazu gibt es offen auf <a href="https://github.com/fsaritome/bundeshaushalt/tree/main/pipeline" target="_blank" rel="noopener">GitHub</a>; jede Rechnung lässt sich dort nachvollziehen und selbst ausführen.</p>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Was noch offen ist</h3>
+    <ul class="trendlist" data-draw="offen" data-source="pruefung"></ul>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)" id="datenschutz">
+    <h3>Datenschutz und Datensicherheit</h3>
+    <ul class="trendlist">
+      <li><b>Keine Cookies, keine Analyse- oder Werbedienste, keine Anmeldung, keine Formulare.</b> Die Seite erfährt nichts über ihre Besucher.</li>
+      <li><b>Keine Daten an Dritte durch die Seite selbst:</b> Seite, Skripte (auch die Grafikbibliothek D3) und Daten kommen alle von derselben Adresse; es werden keine Schriften, Skripte oder Bilder von fremden Servern geladen. Andere Seiten werden nur geöffnet, wenn man einen Link anklickt.</li>
+      <li><b>Im Browser gespeichert:</b> nur die Wahl Hell oder Dunkel (lokaler Speicher, Schlüssel <code>bh-theme</code>). Sie bleibt auf dem Gerät und wird nicht übertragen; „Auto“ löscht sie.</li>
+      <li><b>Hosting:</b> Die Seite liegt bei GitHub Pages (GitHub, Inc.). GitHub speichert laut eigener Dokumentation die IP-Adresse von Besuchern zu Sicherheitszwecken (<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">GitHub-Dokumentation, Abschnitt „Data collection“</a>, <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>). Darauf haben wir keinen Einfluss und keinen Zugriff.</li>
+      <li><b>Fehlermeldungen</b> laufen über GitHub und sind öffentlich sichtbar; dafür gelten die Bedingungen von GitHub.</li>
+      <li><b>Unveränderte Quellen:</b> Von jeder geladenen amtlichen Datei speichern wir eine Prüfsumme (SHA-256, in der Tabelle der Einzelnachweise). Wer dieselbe Datei lädt, kann prüfen, ob sie noch dieselbe ist.</li>
+      <li><b>Keine stillen Änderungen:</b> Jede Änderung an Seite und Daten steht mit Datum in der öffentlichen <a href="https://github.com/fsaritome/bundeshaushalt/commits/main" target="_blank" rel="noopener">Versionsgeschichte auf GitHub</a>. Automatische Datenaktualisierungen kommen als Pull Request mit einer Liste der geänderten Werte.</li>
+    </ul>
+  </div>
+
+  <h2 class="sec" id="lizenzen"><span class="num">10</span>Quellen und Lizenzen</h2>
   <p class="sec-sub">Woher jede Zahl kommt und wie sie berechnet wurde.</p>
   <details class="methode">
     <summary>Methode und Einzelnachweise</summary>
@@ -427,7 +491,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 <footer class="sitefoot">
   <div class="sitefoot-in">
     <span>Gestaltet von Ferit Sari Tomé zusammen mit Claude · © 2026 · Code unter <a href="https://github.com/fsaritome/bundeshaushalt/blob/main/LICENSE">MIT-Lizenz</a></span>
-    <span><a href="https://github.com/fsaritome/bundeshaushalt">Quellcode und Daten auf GitHub</a> · <a href="#top">Nach oben</a></span>
+    <span><a href="https://github.com/fsaritome/bundeshaushalt">Quellcode und Daten auf GitHub</a> · <a href="https://github.com/fsaritome/bundeshaushalt/issues/new?template=fehler.md" target="_blank" rel="noopener">Fehler melden</a> · <a href="#datenschutz">Datenschutz</a> · <a href="#top">Nach oben</a></span>
   </div>
 </footer>
 <script>
@@ -962,7 +1026,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     if (d.status !== 'ok') return;
     const tb = mk('table'); tb.setAttribute('data-source', 'belege'); tb.setAttribute('data-row-key', 'nr');
     const hr = mk('tr');
-    [['nr', 'Nr.'], ['jahr', 'Jahr'], ['art', 'Art'], ['url', 'Quelle']].forEach(([f, l]) => { const h = mk('th', '', l); h.setAttribute('data-field', f); hr.append(h); });
+    [['nr', 'Nr.'], ['jahr', 'Jahr'], ['art', 'Art'], ['url', 'Quelle'], ['abgerufen', 'Abgerufen'], ['sha256', 'Prüfsumme (SHA-256)']].forEach(([f, l]) => { const h = mk('th', '', l); h.setAttribute('data-field', f); hr.append(h); });
     const th = mk('thead'); th.append(hr); tb.append(th);
     const body = mk('tbody');
     d.data.forEach((r) => {
@@ -970,11 +1034,15 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       tr.append(mk('td', '', String(r.nr)), mk('td', '', String(r.jahr)), mk('td', '', r.art));
       const td = mk('td');
       if (/^https:\/\//.test(r.url || '')) { const a = mk('a', '', r.hinweis || r.url); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; td.append(a); } else td.textContent = r.hinweis || '';
-      tr.append(td); body.append(tr);
+      tr.append(td);
+      const ab = mk('td', '', r.abgerufen ? r.abgerufen.split('-').reverse().join('.') : '–');
+      const sh = mk('td', 'sha', r.sha256 ? r.sha256.slice(0, 12) + '…' : '–'); if (r.sha256) sh.title = r.sha256;
+      tr.append(ab, sh); body.append(tr);
     });
     tb.append(body); el.append(tb);
   });
 </script>
 <script src="gesamtbild.js"></script>
+<script src="transparenz.js"></script>
 </body>
 </html>

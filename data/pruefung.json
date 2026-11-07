@@ -1,0 +1,343 @@
+{
+ "stand": "2026-11-07",
+ "gegenproben": [
+  {
+   "bereich": "Alle 19 Themen, 2015–2025 (Ist) und 2026 (Soll)",
+   "quelle": "bundeshaushalt.de (BMF), Funktionen-Ansicht über die Schnittstelle der Visualisierung",
+   "url": "https://www.bundeshaushalt.de/internalapi/budgetData?year=2025&account=expenses&quota=actual&unit=function",
+   "vergleich": [
+    [
+     "Summe 2025 (Ist)",
+     "495,537 Mrd. €",
+     "495,537 Mrd. €"
+    ],
+    [
+     "Summe 2026 (Soll)",
+     "524,540 Mrd. €",
+     "524,540 Mrd. €"
+    ],
+    [
+     "größte Abweichung je Thema und Jahr",
+     "",
+     "≤ 0,003 Mrd. € (Ausnahme 2022: 0,071)"
+    ]
+   ],
+   "ergebnis": "gleich",
+   "erklaerung": "Themen mit derselben Zuordnung unabhängig neu berechnet (Tabelle unten). 2022: Ein Titel (Mieten im Einheitlichen Liegenschaftsmanagement, 0,07 Mrd. €) hat in Plan und BMF-Ansicht die Funktion „Polizei“, in der Haushaltsrechnung „Verwaltung“. Die Seite folgt der Haushaltsrechnung; Summen gleich."
+  },
+  {
+   "bereich": "Eckwerte 2025 und Soll 2026",
+   "quelle": "Bundesfinanzministerium, Monatsbericht Januar 2026 und Kurzübersicht Februar 2026",
+   "url": "https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Oeffentliche_Finanzen/Wirtschafts_und_Finanzdaten/Kurzuebersicht_Haushalts_und_Finanzdaten/2026-02-20-kurzuebersicht-februar-2026.html",
+   "vergleich": [
+    [
+     "Ausgaben 2025 (Ist)",
+     "495,5",
+     "495,5 (vorläufiger Jahresabschluss)"
+    ],
+    [
+     "Steuereinnahmen 2025",
+     "388,7",
+     "388,6"
+    ],
+    [
+     "Nettokreditaufnahme 2025",
+     "66,9",
+     "66,9"
+    ],
+    [
+     "Ausgaben 2026 (Soll)",
+     "524,5",
+     "524,5"
+    ],
+    [
+     "Nettokreditaufnahme 2026 (Soll)",
+     "98,0",
+     "98,0"
+    ]
+   ],
+   "ergebnis": "gleich",
+   "erklaerung": "Der Monatsbericht nennt für 2025 auch 493,3 Mrd. € Ausgaben; laut seiner Fußnote ohne Tilgungen aus zurückgezahlten Notlagenmitteln und haushaltstechnische Verrechnungen."
+  },
+  {
+   "bereich": "Sondervermögen 2025 (Abschnitt 4)",
+   "quelle": "Bundesfinanzministerium, Monatsbericht Januar 2026",
+   "url": "https://www.bundesfinanzministerium.de/Monatsberichte/Ausgabe/2026/01/Inhalte/Kapitel-2-Analysen/2-1-abschluss-bundeshaushalt-ktf-svik-2025.html",
+   "vergleich": [
+    [
+     "Klima- und Transformationsfonds, Programmausgaben",
+     "26,6",
+     "26,6"
+    ],
+    [
+     "Infrastruktur und Klimaneutralität, insgesamt abgeflossen",
+     "24,0",
+     "24,0"
+    ],
+    [
+     "… davon ohne Zuweisung an den KTF",
+     "14,0",
+     "14,0"
+    ]
+   ],
+   "ergebnis": "korrigiert",
+   "erklaerung": "Vor der Gegenprobe zeigte die Seite für den KTF 37,4 Mrd. €, weil eine Zuführung an die Rücklage (10,8 Mrd. €) als Ausgabe zählte. Korrigiert, siehe Korrekturen."
+  },
+  {
+   "bereich": "Defizit Bund insgesamt 2022–2025 (Abschnitt 4)",
+   "quelle": "Destatis, Daten zur EU-Haushaltsüberwachung (Rechenstand Oktober 2026)",
+   "url": "https://www.destatis.de/DE/Themen/Wirtschaft/Volkswirtschaftliche-Gesamtrechnungen-Inlandsprodukt/Tabellen/eu-stabilitaetspakt-defizit-deutschland.html",
+   "vergleich": [
+    [
+     "2022",
+     "−110,94",
+     "−110,94"
+    ],
+    [
+     "2023",
+     "−91,52",
+     "−91,52"
+    ],
+    [
+     "2024",
+     "−60,95",
+     "−60,95"
+    ],
+    [
+     "2025",
+     "−85,27",
+     "−85,27"
+    ]
+   ],
+   "ergebnis": "gleich",
+   "erklaerung": "Ältere Meldungen nennen für 2025 noch 79,6 Mrd. € (erste Berechnung vom Februar 2026, inzwischen revidiert)."
+  },
+  {
+   "bereich": "Verteidigung",
+   "quelle": "NATO, Defence Expenditure of NATO Countries 2014–2025, Tabelle 1",
+   "url": "https://www.nato.int/content/dam/nato/webready/documents/finance/def-exp-2025-en.pdf",
+   "vergleich": [
+    [
+     "2024: Kernhaushalt / Bund insgesamt (Eurostat)",
+     "57,1 / 59,3",
+     ""
+    ],
+    [
+     "2024: NATO-Definition",
+     "",
+     "86,6 (Schätzung)"
+    ],
+    [
+     "2015: Kernhaushalt / NATO",
+     "33,4",
+     "35,9"
+    ]
+   ],
+   "ergebnis": "plausibel",
+   "erklaerung": "Die NATO zählt auch das Sondervermögen Bundeswehr, Versorgung früherer Soldaten und verteidigungsbezogene Posten anderer Ressorts. Die Volkswirtschaftliche Gesamtrechnung bucht Rüstungsgüter bei Lieferung. Für 2025 meldet die NATO noch keinen Wert für Deutschland."
+  },
+  {
+   "bereich": "Rente",
+   "quelle": "Deutsche Rentenversicherung, Bericht der Vorstandsvorsitzenden, 08.12.2025",
+   "url": "https://www.deutsche-rentenversicherung.de/Mitteldeutschland/DE/Ueber-uns/Selbstverwaltung/Reden/2025_12_VV_Rede_VoVo",
+   "vergleich": [
+    [
+     "Bundeszuschüsse an die allgemeine Rentenversicherung 2025",
+     "93,18",
+     "93,2"
+    ]
+   ],
+   "ergebnis": "gleich",
+   "erklaerung": "Das Thema „Rente“ enthält außerdem Beiträge für Kindererziehungszeiten (19,2), die Erstattung der Grundsicherung im Alter (11,8), Knappschaft (4,7) und Alterssicherung der Landwirte (2,4). Lesehilfe entsprechend präzisiert."
+  },
+  {
+   "bereich": "Medianeinkommen 2015–2025",
+   "quelle": "Eurostat ilc_di03 (Schnittstelle)",
+   "url": "https://ec.europa.eu/eurostat/databrowser/view/ilc_di03/default/table",
+   "vergleich": [
+    [
+     "alle 11 Jahre",
+     "",
+     "identisch, auch das Bruch-Kennzeichen 2020"
+    ]
+   ],
+   "ergebnis": "gleich",
+   "erklaerung": "Wird inzwischen automatisch direkt von Eurostat geladen."
+  },
+  {
+   "bereich": "Preise und Haushaltsausgaben",
+   "quelle": "Destatis (Pressemitteilung 16.01.2026, Laufende Wirtschaftsrechnungen), AGV",
+   "url": "https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/01/PD26_019_611.html",
+   "vergleich": [
+    [
+     "Preisindex 2015–2025",
+     "",
+     "identisch mit der AGV-Zusammenstellung der Destatis-Werte"
+    ],
+    [
+     "Preise nach Bereichen 2025",
+     "",
+     "identisch"
+    ],
+    [
+     "Konsumausgaben 2017–2024",
+     "",
+     "identisch"
+    ]
+   ],
+   "ergebnis": "gleich",
+   "erklaerung": "Hinweis zu den Konsumausgaben präzisiert (die Erhebung umfasst nicht alle Haushalte)."
+  }
+ ],
+ "themen_api": [
+  {
+   "jahr": 2015,
+   "wert": "ist",
+   "api": 311.716,
+   "seite": 311.717,
+   "max": 0.0
+  },
+  {
+   "jahr": 2016,
+   "wert": "ist",
+   "api": 317.445,
+   "seite": 317.446,
+   "max": 0.0
+  },
+  {
+   "jahr": 2017,
+   "wert": "ist",
+   "api": 331.039,
+   "seite": 331.036,
+   "max": 0.003
+  },
+  {
+   "jahr": 2018,
+   "wert": "ist",
+   "api": 348.293,
+   "seite": 348.291,
+   "max": 0.0
+  },
+  {
+   "jahr": 2019,
+   "wert": "ist",
+   "api": 357.121,
+   "seite": 357.121,
+   "max": 0.0
+  },
+  {
+   "jahr": 2020,
+   "wert": "ist",
+   "api": 443.432,
+   "seite": 443.431,
+   "max": 0.0
+  },
+  {
+   "jahr": 2021,
+   "wert": "ist",
+   "api": 557.093,
+   "seite": 557.092,
+   "max": 0.0
+  },
+  {
+   "jahr": 2022,
+   "wert": "ist",
+   "api": 481.304,
+   "seite": 481.306,
+   "max": 0.071
+  },
+  {
+   "jahr": 2023,
+   "wert": "ist",
+   "api": 457.663,
+   "seite": 457.664,
+   "max": 0.0
+  },
+  {
+   "jahr": 2024,
+   "wert": "ist",
+   "api": 474.754,
+   "seite": 474.753,
+   "max": 0.0
+  },
+  {
+   "jahr": 2025,
+   "wert": "ist",
+   "api": 495.537,
+   "seite": 495.537,
+   "max": 0.0
+  },
+  {
+   "jahr": 2026,
+   "wert": "soll",
+   "api": 524.54,
+   "seite": 524.54,
+   "max": 0.0
+  }
+ ],
+ "korrekturen": [
+  {
+   "datum": "2026-11-07",
+   "was": "Sondervermögen fehlten",
+   "vorher": "Die Seite zeigte nur den Kernhaushalt, ohne darauf deutlich hinzuweisen.",
+   "nachher": "Abschnitt 4 mit Sondervermögen und Bund insgesamt, Kasten „Was diese Seite zeigt und was nicht“, Lesehilfe je Thema.",
+   "anlass": "eigene Prüfung"
+  },
+  {
+   "datum": "2026-11-07",
+   "was": "KTF-Ausgaben 2025",
+   "vorher": "37,4 Mrd. € (inkl. 10,8 Mrd. € Zuführung an Rücklage)",
+   "nachher": "26,6 Mrd. € (wie BMF); Rücklagenzuführungen und Tilgungen zählen bei allen Sondervermögen nicht mehr als Ausgaben",
+   "anlass": "Gegenprobe BMF-Monatsbericht"
+  },
+  {
+   "datum": "2026-11-07",
+   "was": "Lesehilfe Rente",
+   "vorher": "„Nur die Zuschüsse des Bundes“",
+   "nachher": "nennt Kindererziehungszeiten, Grundsicherung im Alter, Knappschaft, Alterssicherung der Landwirte",
+   "anlass": "Gegenprobe Rentenversicherung"
+  },
+  {
+   "datum": "2026-11-07",
+   "was": "Hinweis Konsumausgaben",
+   "vorher": "„Durchschnitt aller Haushalte“",
+   "nachher": "ohne Selbstständige, Landwirte und Haushalte über 18.000 € netto im Monat (wie in der Erhebung)",
+   "anlass": "Abgleich mit Destatis"
+  },
+  {
+   "datum": "2026-11-07",
+   "was": "Themenwerte 2017 und 2022",
+   "vorher": "sechs Werte nach einer früheren Aufbereitung",
+   "nachher": "nach der Haushaltsrechnung; Verschiebung zwischen zwei Themen um höchstens 0,07 Mrd. €, Summen unverändert",
+   "anlass": "Neuberechnung aus den amtlichen Dateien"
+  },
+  {
+   "datum": "2026-11-07",
+   "was": "Trendsatz Zinsen",
+   "vorher": "„Zinsausgaben“",
+   "nachher": "„Ausgaben für Zinsen und Schulden (Funktion 83)“",
+   "anlass": "eigene Prüfung"
+  },
+  {
+   "datum": "2026-11-07",
+   "was": "Quellen zum Haushalt 2027",
+   "vorher": "wie dargestellte Daten aufgeführt",
+   "nachher": "als „noch nicht als Grafik gezeigt“ gekennzeichnet",
+   "anlass": "eigene Prüfung"
+  }
+ ],
+ "automatisch": [
+  "Die Summe aller Ausgabetitel 2026 muss exakt der Gesamtsumme im Haushaltsgesetz 2026 entsprechen (524.540.138 Tsd. €).",
+  "Jeder Haushaltstitel muss genau einem Thema zugeordnet sein; sonst bricht die Berechnung ab.",
+  "Was ein Sondervermögen an ein anderes überweist, muss dort als Einnahme ankommen.",
+  "Die Aufgabenbereiche von Eurostat müssen die Gesamtsumme ergeben; Jahre dürfen nicht fehlen.",
+  "Geänderte Werte werden aufgelistet und gehen nur nach Prüfung durch einen Menschen online (Pull Request).",
+  "Von jeder geladenen amtlichen Datei wird eine Prüfsumme (SHA-256) gespeichert; damit lässt sich zeigen, dass sich eine Quelle nicht unbemerkt geändert hat."
+ ],
+ "offen": [
+  "Die erklärenden Texte (Lesehilfe, Abschnitt 4, Fragen) hat noch keine fachkundige Person außerhalb des Projekts gelesen.",
+  "Sondervermögen vor 2023 und als Ist vor 2025 sind in den amtlichen Dateien nicht enthalten; für diese Jahre gibt es nur das Gesamtbild von Eurostat.",
+  "Für 2025 gibt es noch keine Eurostat-Werte zu den Aufgabenbereichen und keine NATO-Zahl für Deutschland.",
+  "Preise und Haushaltsausgaben werden von Hand nachgetragen und nicht automatisch abgeglichen."
+ ]
+}
