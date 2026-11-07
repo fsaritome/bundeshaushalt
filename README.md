@@ -24,6 +24,8 @@ Grün heißt gestiegen, Rot heißt gesunken. Das ist keine Bewertung.
 | `data/preise.json` | Verbraucherpreisindex, 2020 = 100 | Statistisches Bundesamt |
 | `data/preise_kategorien.json` | Preise 2025 nach Bereichen | Statistisches Bundesamt, Pressemitteilung vom 16.01.2026 |
 | `data/konsum.json` | Konsumausgaben je Haushalt und Monat | Statistisches Bundesamt (Laufende Wirtschaftsrechnungen, EVS) |
+| `data/sondervermoegen.json` | Sondervermögen (Wirtschaftspläne) je Jahr: Ausgaben, Zahlungen an andere Sondervermögen, Finanzierung (Kredite, Rücklage, eigene Einnahmen, Kernhaushalt); EU-Eigenmittel | Anlagen zum Haushaltsplan 2023–2026 und zur Haushaltsrechnung 2025 (bundeshaushalt.de) |
+| `data/bund_gesamt.json` | Bund insgesamt mit allen Sondervermögen und Extrahaushalten: Ausgaben nach Aufgabenbereichen, Finanzierungssaldo | Eurostat gov_10a_exp / gov_10a_main, Sektor Zentralstaat (S1311) |
 | `data/belege.json` | Alle Quellen mit Link und Prüfsumme | – |
 
 Kontrolle: Die Summe aller Haushaltstitel 2026 ergibt exakt die Gesamtsumme im Haushaltsgesetz 2026 (524.540.138 Tsd. €). Die amtlichen Dateien wurden zuerst über das offene Projekt [Bundeshaushaltstracker](https://github.com/eis2k/Bundeshaushaltstracker) bezogen, das ihre Prüfsummen festhält; das eigene Skript in `pipeline/` rechnet sie heute direkt nach.
@@ -31,7 +33,8 @@ Kontrolle: Die Summe aller Haushaltstitel 2026 ergibt exakt die Gesamtsumme im H
 Hinweise:
 
 - **Soll** = endgültiges Soll einschließlich Nachtragshaushalten, wie in der Haushaltsrechnung ausgewiesen; für Jahre ohne Haushaltsrechnung der beschlossene Haushaltsplan. **Ist** = Haushaltsrechnung.
-- **Kernhaushalt:** Die Anlagen zum Haushaltsplan (Kapitel xx90–xx99: Sondervermögen, EU-Eigenmittel, nachgeordnete Anstalten) sind nicht enthalten.
+- **Kernhaushalt:** Die Anlagen zum Haushaltsplan (Kapitel xx90–xx99: Sondervermögen, EU-Eigenmittel, nachgeordnete Anstalten) sind in den Themen nicht enthalten. Abschnitt 4 der Seite zeigt sie gesondert: die Sondervermögen aus ihren Wirtschaftsplänen (Zahlungen zwischen Sondervermögen nur einmal gezählt; in den amtlichen Dateien erst ab dem Haushalt 2023 und als Ist bisher nur 2025) und den Bund insgesamt laut Eurostat (2015 bis zum letzten verfügbaren Jahr).
+- **Nicht enthalten:** Länder und Gemeinden, die Sozialversicherungen selbst (nur die Bundeszuschüsse sind enthalten) und Leistungen über die Steuer (Kindergeld, Kinderfreibetrag, Ehegattensplitting).
 - Das Kindergeld erscheint nicht als Ausgabe, weil es über die Steuer verrechnet wird. 2020 gibt es einen Bruch in der Einkommensreihe.
 
 ## Daten aktualisieren
@@ -39,7 +42,9 @@ Hinweise:
 Zwei Skripte rechnen die Daten aus den amtlichen Quellen neu:
 
 - `pipeline/haushalt.py`: Haushaltsdateien von bundeshaushalt.de (Quellen in `pipeline/quellen.json`; neue Jahre werden über das Dateimuster `HH_<Jahr>_ALL.csv` bzw. `rechnung_<Jahr>.xml` gefunden). Bricht ab, wenn ein Titel keinem Thema zugeordnet werden kann oder die Kontrollsumme 2026 nicht stimmt.
+- `pipeline/sondervermoegen.py`: Wirtschaftspläne der Sondervermögen aus denselben Dateien. Bricht ab, wenn Zahlungen zwischen Sondervermögen nicht beim Empfänger ankommen.
 - `pipeline/median.py`: Medianeinkommen über die Eurostat-Schnittstelle.
+- `pipeline/gesamtstaat.py`: Bund insgesamt (Eurostat, Sektor Zentralstaat). Bricht ab, wenn die Aufgabenbereiche nicht die Summe ergeben oder Jahre fehlen.
 
 Bei Änderungen entsteht ein Pull Request mit einer Liste der geänderten Werte. Online geht erst, was jemand prüft und zusammenführt.
 

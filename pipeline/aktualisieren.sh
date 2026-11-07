@@ -24,7 +24,9 @@ git merge -q --ff-only origin/main
 
 rm -f pipeline/bericht.md
 "$PY" pipeline/haushalt.py
+"$PY" pipeline/sondervermoegen.py
 "$PY" pipeline/median.py
+"$PY" pipeline/gesamtstaat.py
 
 if git diff --quiet -- data; then
   echo "Keine Änderungen an den Daten."

@@ -1,6 +1,6 @@
 // Kleine Laufzeit für die Seite: lädt die Daten aus /data, rechnet die Berechnungen und zeichnet die Grafiken.
 (function () {
-  const DATASETS = ['themen', 'jahre', 'median', 'preise', 'preise_kategorien', 'konsum', 'belege'];
+  const DATASETS = ['themen', 'jahre', 'median', 'preise', 'preise_kategorien', 'konsum', 'belege', 'sondervermoegen', 'bund_gesamt'];
   const store = {};
   const calcs = {};
   const draws = {};

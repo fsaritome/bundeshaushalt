@@ -31,7 +31,7 @@ jobs:
       - name: Haushaltsdaten neu berechnen
         run: |
           set +e
-          python3 pipeline/haushalt.py
+          python3 pipeline/haushalt.py && python3 pipeline/sondervermoegen.py
           rc=$?
           set -e
           if [ "$rc" -eq 3 ]; then
@@ -41,8 +41,10 @@ jobs:
             exit "$rc"
           fi
 
-      - name: Medianeinkommen von Eurostat
-        run: python3 pipeline/median.py
+      - name: Medianeinkommen und Bund insgesamt von Eurostat
+        run: |
+          python3 pipeline/median.py
+          python3 pipeline/gesamtstaat.py
 
       - name: Pull Request bei Änderungen
         env:

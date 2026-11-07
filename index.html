@@ -155,6 +155,16 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 .st .trendlist, .st .fragen { margin: 0; padding-left: 1.3em; line-height: 1.55; }
 .st .trendlist li, .st .fragen li { margin-bottom: var(--cds-gap-sm); }
 .st .trendlist b { font-variant-numeric: tabular-nums; }
+.st .scope { margin-top: 20px; padding: 14px 16px; border: 1px solid var(--color-border-line); border-left: 3px solid var(--color-accent); border-radius: 10px; background: var(--color-panel); max-width: 78ch; font-size: .9rem; line-height: 1.5; }
+.st .scope h3 { margin: 0 0 6px; font-size: 1rem; }
+.st .scope ul { margin: 0 0 6px; padding-left: 1.2em; }
+.st .scope li { margin-bottom: 4px; }
+.st .scope p { margin: 0; color: var(--color-fg-muted); }
+.st .hinweis { color: var(--color-fg-muted); }
+.st .sv-row .sb-y { font-size: .75rem; line-height: 1.2; }
+.st .sv-row { grid-template-columns: 5.6rem 1fr; }
+.st .sv-kern { height: 8px; margin-top: 3px; }
+.st .sv-kern-label { font-size: .75rem; color: var(--color-fg-muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
 .st .foot { margin-top: var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .st .pos { color: var(--color-ok); }
 .st .tablewrap { overflow: auto; max-height: 36rem; }
@@ -186,6 +196,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       <a href="#gestapelt">Überblick</a>
       <a href="#themen">Themen</a>
       <a href="#veraenderung">Veränderung</a>
+      <a href="#gesamt">Mit Sondervermögen</a>
       <a href="#median">Einkommen &amp; Preise</a>
       <a href="#tabelle">Alle Zahlen</a>
       <a href="#trends">Trends</a>
@@ -207,7 +218,17 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <h1>Wohin fließt das Geld des Bundes?</h1>
     <p class="about">Diese Seite macht den Bundeshaushalt nachprüfbar. Sie zeigt alle Ausgaben des Bundes von 2015 bis 2026, geplant und tatsächlich, aufgeteilt nach Themen, und stellt sie dem mittleren Einkommen, den Preisen und den Ausgaben der Haushalte gegenüber. Alle Zahlen stammen aus amtlichen Quellen (Bundesfinanzministerium, Statistisches Bundesamt, Eurostat) und sind unten einzeln verlinkt.</p>
     <p class="credit">Gestaltet von Ferit Sari Tomé zusammen mit Claude</p>
-    <p class="lede">2015 plante der Bund <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2015">—</b>, 2026 sind es <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2026">—</b>. Alles ist antippbar. Grün heißt gestiegen, Rot heißt gesunken, das ist keine Bewertung.</p>
+    <p class="lede">2015 plante der Bund im Kernhaushalt <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2015">—</b>, 2026 sind es <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2026">—</b>. Alles ist antippbar. Grün heißt gestiegen, Rot heißt gesunken, das ist keine Bewertung.</p>
+    <div class="scope">
+      <h3>Was diese Seite zeigt und was nicht</h3>
+      <ul>
+        <li><b>Abschnitte 1–3 und 6:</b> der <b>Kernhaushalt</b> des Bundes, also der vom Bundestag beschlossene Haushaltsplan und seine Abrechnung.</li>
+        <li><b>Abschnitt 4:</b> die <b>Sondervermögen</b> (etwa für Bundeswehr, Klima oder Infrastruktur) mit eigenen Wirtschaftsplänen und eigenen Krediten, 2026 geplant <b data-draw="svsumme" data-source="sv_jahre">—</b>, sowie der <b>Bund insgesamt</b> laut amtlicher Volkswirtschaftlicher Gesamtrechnung.</li>
+        <li><b>Nicht enthalten:</b> Länder und Gemeinden (z. B. Schulen, Kitas, Landespolizei), die Sozialversicherungen selbst (Renten-, Kranken-, Pflege-, Arbeitslosenversicherung; enthalten sind nur die Zuschüsse des Bundes) und Leistungen über die Steuer wie Kindergeld, Kinderfreibetrag oder Ehegattensplitting, die als geringere Steuereinnahmen verbucht werden.</li>
+        <li><b>EU-Beiträge:</b> Die Eigenmittel an die EU werden vorab von den Steuereinnahmen abgezogen und erscheinen nicht als Ausgabe des Kernhaushalts (<span data-draw="eusumme" data-source="sv_jahre">—</span>).</li>
+      </ul>
+      <p>Wer einzelne Themen vergleicht, sollte die <a href="#lesehilfe">Lesehilfe</a> beachten.</p>
+    </div>
   </section>
 
   <div class="toolbar">
@@ -225,7 +246,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       </select>
     </label>
   </div>
-  <span class="hint">Gilt für die Abschnitte 1, 2, 3 und 5.</span>
+  <span class="hint">Gilt für die Abschnitte 1, 2, 3 und 6 (Kernhaushalt).</span>
   </div>
 
   <h2 class="sec" id="gestapelt"><span class="num">01</span>Alle Jahre gestapelt</h2>
@@ -254,6 +275,12 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div data-draw="multiples" data-source="matrix"></div>
   </div>
 
+  <div class="card" id="lesehilfe" style="margin-top: var(--cds-gap-md)">
+    <h3>Lesehilfe: Was in einzelnen Themen steckt und was fehlt</h3>
+    <p class="note">Die Themen zeigen, was der Bund im Kernhaushalt ausgibt. Bei einigen Themen liegt ein großer Teil des Geschehens woanders.</p>
+    <ul class="trendlist" data-draw="lesehilfe" data-source="sv_jahre"></ul>
+  </div>
+
   <h2 class="sec" id="veraenderung"><span class="num">03</span>Was sich verändert hat</h2>
   <p class="sec-sub">Zuwachs oder Rückgang je Thema zwischen dem ersten und dem letzten Jahr.</p>
   <div class="card">
@@ -263,19 +290,54 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="diffdetail" data-source="veraenderung">—</div>
   </div>
 
-  <h2 class="sec" id="median"><span class="num">04</span>Haushalt im Vergleich zum mittleren Einkommen</h2>
+  <h2 class="sec" id="gesamt"><span class="num">04</span>Das ganze Bild: Bund mit Sondervermögen</h2>
+  <p class="sec-sub">Die Abschnitte 1 bis 3 zeigen den Kernhaushalt. Ein wachsender Teil der Ausgaben des Bundes läuft über Sondervermögen: Fonds mit eigenem Wirtschaftsplan, die sich oft über eigene Kredite finanzieren.</p>
+  <div class="card">
+    <h3>Sondervermögen je Jahr</h3>
+    <p class="note">Mrd. €, laut den Wirtschaftsplänen in den Anlagen zum Haushaltsplan (enthalten ab dem Haushalt 2023; als Abrechnung „Ist“ liegt bisher nur 2025 vor). Zahlungen zwischen Sondervermögen sind nur einmal gezählt. Der graue Balken darunter zeigt zum Vergleich den Kernhaushalt desselben Jahres, im selben Maßstab. Tippe auf ein Balkenstück für Finanzierung und Details.</p>
+    <div class="legend" data-draw="svlegende" data-source="sv_jahre"></div>
+    <div data-draw="svchart" data-source="sv_jahre"></div>
+    <div class="detail" data-draw="svdetail" data-source="sv_jahre">—</div>
+    <p class="note">2023 und 2024 sind Planwerte; nach dem Urteil des Bundesverfassungsgerichts vom 15.11.2023 zum Klima- und Transformationsfonds lagen die tatsächlichen Ausgaben teils deutlich niedriger. „Aus Rücklage“ heißt: Geld, das dem Fonds in früheren Jahren zugeführt wurde, häufig selbst über Kredite.</p>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Kernhaushalt und Bund insgesamt</h3>
+    <p class="note">Mrd. €. „Bund insgesamt“ = Bund mit allen Sondervermögen und Extrahaushalten laut Volkswirtschaftlicher Gesamtrechnung (Eurostat, Sektor Zentralstaat), ohne Länder, Gemeinden und Sozialversicherungen. Die Rechenweise unterscheidet sich vom Haushaltsrecht (z. B. Buchung nach Entstehung statt nach Zahlung), daher sind die Werte nicht auf den Euro vergleichbar, zeigen aber die Größenordnung. Tippe auf ein Jahr.</p>
+    <div class="legend"><span class="lgx"><i class="c0"></i>Kernhaushalt (Ist)</span><span class="lgx"><i class="c4"></i>Bund insgesamt (Eurostat)</span></div>
+    <div data-draw="gesamtchart" data-source="gesamt_vergleich"></div>
+    <div class="detail" data-draw="gesamtdetail" data-source="gesamt_vergleich">—</div>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Bund insgesamt nach Aufgabenbereichen</h3>
+    <p class="note">Mrd. €, letztes verfügbares Jahr, mit Veränderung seit 2015. Internationale Einteilung der Staatsausgaben (COFOG), daher andere Bereiche als die Themen oben. Tippe auf einen Bereich für den Verlauf.</p>
+    <div data-draw="cofogchart" data-source="cofog"></div>
+    <div class="detail" data-draw="cofogdetail" data-source="cofog">—</div>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Neue Schulden: Kernhaushalt und Bund insgesamt</h3>
+    <p class="note">Mrd. € je Jahr. Kernhaushalt = Nettokreditaufnahme laut Haushaltsrechnung. Bund insgesamt = Finanzierungsdefizit laut Eurostat, mit Sondervermögen; ein Überschuss erscheint als negativer Wert. Tippe auf ein Jahr.</p>
+    <div class="legend"><span class="lgx"><i class="c0"></i>Kernhaushalt</span><span class="lgx"><i class="c4"></i>Bund insgesamt</span></div>
+    <div data-draw="schuldenchart" data-source="gesamt_vergleich"></div>
+    <div class="detail" data-draw="schuldendetail" data-source="gesamt_vergleich">—</div>
+    <p class="note">Warum die beiden Werte voneinander abweichen können: Kredite des Kernhaushalts flossen teils zuerst in Rücklagen von Sondervermögen (z. B. 2021 in den Energie- und Klimafonds) und wurden erst später ausgegeben. Die Volkswirtschaftliche Gesamtrechnung bucht Ausgaben, wenn sie entstehen, und zählt Darlehen und Beteiligungen nicht zum Defizit. Kredite der Sondervermögen selbst (z. B. Bundeswehr, Infrastruktur) sind dagegen nur im Wert „Bund insgesamt“ enthalten.</p>
+  </div>
+
+  <h2 class="sec" id="median"><span class="num">05</span>Haushalt im Vergleich zum mittleren Einkommen</h2>
   <p class="sec-sub">Bundesausgaben, Steuern, Einkommen und Preise nebeneinander, und was ein Haushalt im Monat ausgibt.</p>
   <div class="card">
     <h3>Wie stark ist was seit 2015 gewachsen?</h3>
     <p class="note">Index, 2015 = 100, tatsächliche Werte (unabhängig vom Schalter oben). Mittleres Einkommen = Median des Nettoäquivalenzeinkommens: Die Hälfte der Menschen in Deutschland hat mehr, die Hälfte weniger, nach Steuern und Abgaben und gewichtet nach Haushaltsgröße. (Median statt Durchschnitt: Der Durchschnitt liegt deutlich höher, weil wenige sehr hohe Einkommen ihn nach oben ziehen. Der Median zeigt, was ein typischer Mensch hat.) Preise = Verbraucherpreisindex.</p>
     <div class="mtiles">
-      <div class="mtile"><span class="lab">Bundesausgaben seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=ausgaben">—</b></div>
+      <div class="mtile"><span class="lab">Bundesausgaben (Kernhaushalt) seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=ausgaben">—</b></div>
       <div class="mtile"><span class="lab">Steuereinnahmen des Bundes seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=steuern">—</b></div>
       <div class="mtile"><span class="lab">Mittleres Einkommen seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=median">—</b></div>
       <div class="mtile"><span class="lab">Preise seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=preise">—</b></div>
       <div class="mtile"><span class="lab">Mittleres Einkommen nach Abzug der Preissteigerung</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=real">—</b></div>
     </div>
-    <div class="legend"><span class="lgx"><i class="c0"></i>Bundesausgaben</span><span class="lgx"><i class="c1"></i>Steuereinnahmen des Bundes</span><span class="lgx"><i class="c2"></i>Mittleres Einkommen</span><span class="lgx"><i class="c3"></i>Preise</span></div>
+    <div class="legend"><span class="lgx"><i class="c0"></i>Bundesausgaben (Kernhaushalt)</span><span class="lgx"><i class="c1"></i>Steuereinnahmen des Bundes</span><span class="lgx"><i class="c2"></i>Mittleres Einkommen</span><span class="lgx"><i class="c3"></i>Preise</span></div>
     <div class="linechart" data-draw="indexchart" data-source="vergleich"></div>
     <div class="detail" data-draw="indexdetail" data-source="vergleich">—</div>
     <p class="note">Hinweise: 2020 gibt es einen Bruch in der Einkommensreihe, weil die Erhebung in den Mikrozensus integriert wurde; der Sprung in diesem Jahr ist teilweise methodisch. Das Erhebungsjahr bezieht sich auf die Einkommen des Vorjahres. Ein Haushalt, der schneller wächst als die Einkommen, heißt nicht automatisch, dass jemand weniger hat, denn auch Bevölkerung, Preise und Aufgaben verändern sich.</p>
@@ -302,7 +364,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="konsumdetail" data-source="konsum">—</div>
   </div>
 
-  <h2 class="sec" id="tabelle"><span class="num">05</span>Alle Zahlen</h2>
+  <h2 class="sec" id="tabelle"><span class="num">06</span>Alle Zahlen</h2>
   <p class="sec-sub">Jedes Thema in jedem Jahr als Tabelle zum Nachschlagen.</p>
   <div class="card">
     <h3>Jedes Thema in jedem Jahr</h3>
@@ -311,15 +373,15 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="matrixdetail" data-source="matrix">—</div>
   </div>
 
-  <h2 class="sec" id="trends"><span class="num">06</span>Trends auf einen Blick</h2>
+  <h2 class="sec" id="trends"><span class="num">07</span>Trends auf einen Blick</h2>
   <p class="sec-sub">Die auffälligsten Entwicklungen in wenigen Sätzen, aus den Daten berechnet.</p>
   <div class="card">
     <h3>Was die Zahlen von 2015 bis 2025 zeigen</h3>
-    <p class="note">Tatsächliche Werte (Ist), unabhängig vom Schalter oben, direkt aus den Daten dieser Seite berechnet. Beschreibung, keine Bewertung.</p>
+    <p class="note">Tatsächliche Werte (Ist), unabhängig vom Schalter oben, direkt aus den Daten dieser Seite berechnet. Wo nicht anders gesagt: Kernhaushalt. Beschreibung, keine Bewertung.</p>
     <ul class="trendlist" data-draw="trends" data-source="trends"></ul>
   </div>
 
-  <h2 class="sec" id="fragen"><span class="num">07</span>Fragen zum Weiterdenken</h2>
+  <h2 class="sec" id="fragen"><span class="num">08</span>Fragen zum Weiterdenken</h2>
   <p class="sec-sub">Zahlen beantworten nicht, was richtig ist. Diese Fragen helfen beim Einordnen.</p>
   <div class="card">
     <h3>Fragen, die man sich selbst stellen kann</h3>
@@ -328,7 +390,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       <li>Welcher Teil der Ausgaben ist durch Gesetze festgelegt (etwa Rentenzuschüsse oder Zinsen), und über wie viel entscheidet der Bundestag jedes Jahr wirklich neu?</li>
       <li>Wenn ein Thema wächst: Liegt es an mehr Menschen, die Anspruch haben, an höheren Preisen oder an neuen Aufgaben?</li>
       <li>Welcher Maßstab ist fair: Euro, Euro pro Kopf, Anteil an der Wirtschaftsleistung oder nach Abzug der Inflation? Ändert sich mein Eindruck je nach Maßstab?</li>
-      <li>Welche Ausgaben laufen außerhalb dieses Kernhaushalts, zum Beispiel über Sondervermögen, und wie würde das Bild mit ihnen aussehen?</li>
+      <li>Ein wachsender Teil der Bundesausgaben läuft über Sondervermögen mit eigenen Krediten (Abschnitt 4). Wie verändert das meinen Eindruck von einzelnen Themen und von der Verschuldung?</li>
       <li>Kredite verteilen Kosten über die Zeit. Für welche Ausgaben halte ich das für angemessen, für welche nicht, und warum?</li>
       <li>Woran ließe sich erkennen, ob eine Ausgabe ihr Ziel erreicht? Wer prüft das heute?</li>
       <li>Wenn ich ein Thema kürzen oder erhöhen würde: Wen beträfe das, und was müsste dafür woanders passieren?</li>
@@ -336,7 +398,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     </ol>
   </div>
 
-  <h2 class="sec" id="lizenzen"><span class="num">08</span>Quellen und Lizenzen</h2>
+  <h2 class="sec" id="lizenzen"><span class="num">09</span>Quellen und Lizenzen</h2>
   <p class="sec-sub">Woher jede Zahl kommt und wie sie berechnet wurde.</p>
   <details class="methode">
     <summary>Methode und Einzelnachweise</summary>
@@ -348,11 +410,11 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
   <div class="card note" style="margin: 16px 0 0">
     <p style="margin-top: 0">Wir danken allen, deren Daten und Arbeit diese Seite möglich machen. Jede Zahl ist oben unter „Methode und Einzelnachweise“ einzeln verlinkt.</p>
     <ul style="padding-left: 1.2em; margin: 0">
-      <li><b>Bundeshaushalt (Soll und Ist):</b> Quelle: Bundesministerium der Finanzen, <a href="https://www.bundeshaushalt.de" target="_blank" rel="noopener">bundeshaushalt.de</a> (Haushaltspläne und Haushaltsrechnungen 2015–2026). Gesamtsumme 2026 abgeglichen mit dem Haushaltsgesetz 2026 (<a href="https://www.gesetze-im-internet.de/hg_2026/anlage.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>, Bundesministerium der Justiz).</li>
+      <li><b>Bundeshaushalt (Soll und Ist):</b> Quelle: Bundesministerium der Finanzen, <a href="https://www.bundeshaushalt.de" target="_blank" rel="noopener">bundeshaushalt.de</a> (Haushaltspläne und Haushaltsrechnungen 2015–2026; Sondervermögen aus den Wirtschaftsplänen in den Anlagen zum Haushaltsplan 2023–2026 und zur Haushaltsrechnung 2025). Gesamtsumme 2026 abgeglichen mit dem Haushaltsgesetz 2026 (<a href="https://www.gesetze-im-internet.de/hg_2026/anlage.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>, Bundesministerium der Justiz).</li>
       <li><b>Aufbereitung der amtlichen Dateien:</b> Die Daten wurden zuerst über das offene Projekt <a href="https://github.com/eis2k/Bundeshaushaltstracker" target="_blank" rel="noopener">Bundeshaushaltstracker</a> (eis2k) bezogen, das die Originaldateien mit Prüfsummen festhält. Vielen Dank dafür. Inzwischen rechnet ein eigenes, offenes Skript (<a href="https://github.com/fsaritome/bundeshaushalt/tree/main/pipeline">pipeline/</a>) die Zahlen direkt aus den amtlichen Dateien nach.</li>
       <li><b>Haushaltsentwurf 2027 und Hintergrund</b> (in den Einzelnachweisen und Daten geführt, auf dieser Seite noch nicht als Grafik gezeigt): Deutscher Bundestag (<a href="https://www.bundestag.de" target="_blank" rel="noopener">bundestag.de</a>, heute im bundestag, <a href="https://www.mitmischen.de" target="_blank" rel="noopener">mitmischen.de</a>); Bundesrechnungshof (Bericht zum Entwurf 2027, veröffentlicht über Table.Media), KfW Research (Chartbook Bundeshaushalt, August 2026) und der Subventionsbericht der Bundesregierung (berichtet vom VDIV).</li>
       <li><b>Statistisches Bundesamt:</b> Verbraucherpreisindex, Preise nach Bereichen, Medianeinkommen 2025 (Abgleich), Konsumausgaben (Laufende Wirtschaftsrechnungen, EVS). © Statistisches Bundesamt (Destatis), 2026, lizenziert unter der <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">Datenlizenz Deutschland – Namensnennung – Version 2.0</a>. Zusammenstellung der Jahreswerte des Verbraucherpreisindex über den Arbeitgeberverband der Versicherungsunternehmen (AGV), EVS-Werte 2018/2023 berichtet vom VDIV.</li>
-      <li><b>Eurostat:</b> Medianes Nettoäquivalenzeinkommen 2015–2025 (EU-SILC, Tabelle ilc_di03). Quelle: Eurostat, © Europäische Union, Weiterverwendung gemäß der <a href="https://ec.europa.eu/eurostat/about-us/policies/copyright" target="_blank" rel="noopener">Eurostat-Urheberrechtsrichtlinie</a>. Zuerst abgerufen über <a href="https://db.nomics.world" target="_blank" rel="noopener">DBnomics</a>, inzwischen direkt über die Eurostat-Schnittstelle.</li>
+      <li><b>Eurostat:</b> Medianes Nettoäquivalenzeinkommen 2015–2025 (EU-SILC, Tabelle ilc_di03); Ausgaben des Bundes insgesamt nach Aufgabenbereichen (Tabelle gov_10a_exp) und Finanzierungssaldo (gov_10a_main), jeweils Sektor Zentralstaat (S1311), Volkswirtschaftliche Gesamtrechnungen. Quelle: Eurostat, © Europäische Union, Weiterverwendung gemäß der <a href="https://ec.europa.eu/eurostat/about-us/policies/copyright" target="_blank" rel="noopener">Eurostat-Urheberrechtsrichtlinie</a>. Zuerst abgerufen über <a href="https://db.nomics.world" target="_blank" rel="noopener">DBnomics</a>, inzwischen direkt über die Eurostat-Schnittstelle.</li>
       <li><b>Software:</b> Diagramme mit <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a> (© Mike Bostock, <a href="vendor/D3-LICENSE.txt">ISC-Lizenz</a>), Version 7.9.0, mit der Seite ausgeliefert. Seite: © 2026 Ferit Sari Tomé, MIT-Lizenz.</li>
     </ul>
     <p style="margin-bottom: 0">Diese Seite ist ein unabhängiges Projekt und wird von keiner der genannten Stellen herausgegeben oder unterstützt. Die Aufbereitung (Themenzuordnung, Indizes, Veränderungen) ist eigene Berechnung; Fehler gehen auf uns, nicht auf die Quellen.</p>
@@ -397,7 +459,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     const s = readSeries();
     dash.colors.splice(0, s.length, ...s);
     palette.splice(0, palette.length, ...new Set([...s, ...d3.schemeTableau10, ...d3.schemeSet2, ...d3.schemeDark2]));
-    document.querySelectorAll('.st .c0, .st .c1, .st .c2, .st .c3').forEach((e) => { e.style.background = dash.colors[Number(e.className.slice(1))]; });
+    document.querySelectorAll('.st .c0, .st .c1, .st .c2, .st .c3, .st .c4').forEach((e) => { e.style.background = dash.colors[Number(e.className.slice(1))]; });
     if (save) dash.setParams({});
   };
   let savedTheme = 'auto'; try { savedTheme = localStorage.getItem('bh-theme') || 'auto'; } catch (e) {}
@@ -484,9 +546,9 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
   });
 
   dash.calc('trends', {
-    inputs: ['themen', 'jahre', 'vergleich'], title: 'Trends 2015 bis 2025',
+    inputs: ['themen', 'jahre', 'vergleich', 'gesamt_vergleich', 'sv_jahre'], title: 'Trends 2015 bis 2025',
     description: 'Neutrale Kennzahlen aus den Ist-Werten: größte Veränderungen je Thema, Anteile, Zinsen, Kredite, Steuerdeckung und Realeinkommen.',
-    fn: (themen, jahre, vergleich) => {
+    fn: (themen, jahre, vergleich, gv, sv) => {
       const A = 2015, B = d3.max(themen.filter((t) => t.ist != null), (t) => t.jahr);
       const by = new Map();
       themen.forEach((t) => { if (!by.has(t.thema)) by.set(t.thema, { thema: t.thema, name: t.name, ist: {} }); if (t.ist != null) by.get(t.thema).ist[t.jahr] = t.ist; });
@@ -506,7 +568,8 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       const v19 = vergleich.find((v) => v.jahr === 2019), vB = vergleich[vergleich.length - 1];
       return { A, B, totA, totB, byDiff, byPct, down, top3, zins, zinsMin, kredJahre, ohneKredit, kredSum: d3.sum(kredJahre, (j) => j.kredite_ist),
         deckA: ja.steuern_ist / ja.ausgaben_ist, deckB: jb.steuern_ist / jb.ausgaben_ist,
-        real19: v19 && vB ? vB.idx_real / v19.idx_real - 1 : null, realJahr: vB && vB.jahr };
+        real19: v19 && vB ? vB.idx_real / v19.idx_real - 1 : null, realJahr: vB && vB.jahr,
+        gv, sv };
     }
   });
   dash.draw('trends', (el) => {
@@ -517,7 +580,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     const li = (...parts) => { const l = mk('li'); parts.forEach((p) => l.append(typeof p === 'string' ? document.createTextNode(p) : p)); el.append(l); };
     const B = (s) => mk('b', '', s);
     const g = t.byDiff[0], g2 = t.byDiff[1];
-    li('Den größten Zuwachs in Euro hatte ', B(g.name), ': ', colored(signed(g.diff), g.diff), ' (' + mrd(g.a) + ' → ' + mrd(g.b) + '), gefolgt von ', B(g2.name), ' mit ', colored(signed(g2.diff), g2.diff), '.');
+    li('Den größten Zuwachs in Euro im Kernhaushalt hatte ', B(g.name), ': ', colored(signed(g.diff), g.diff), ' (' + mrd(g.a) + ' → ' + mrd(g.b) + '), gefolgt von ', B(g2.name), ' mit ', colored(signed(g2.diff), g2.diff), '.');
     const p = t.byPct[0];
     li('Am stärksten in Prozent gewachsen ist ', B(p.name), ': ', colored(spct(p.pct), p.pct), ' (' + mrd(p.a) + ' → ' + mrd(p.b) + (p.a < 5 ? ', von kleiner Ausgangsbasis' : '') + ').');
     if (t.down.length) li('Weniger als ' + t.A + ' ausgegeben wurde ' + t.B + ' für: ', ...t.down.flatMap((r, i) => [i ? ', ' : '', B(r.name), ' (', colored(signed(r.diff), r.diff), ')']), '.');
@@ -525,8 +588,14 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     const s3a = d3.sum(t.top3, (r) => r.a) / t.totA, s3b = d3.sum(t.top3, (r) => r.b) / t.totB;
     li('Die drei größten Themen ' + t.B + ' (' + t.top3.map((r) => '„' + r.name + '“').join(', ') + ') machten ', B(pf.format(s3b)), ' aller Ausgaben aus; ' + t.A + ' waren es ' + pf.format(s3a) + '.');
     if (t.zins && t.zinsMin) li('Die Ausgaben für Zinsen und Schulden (Funktion 83) sanken von ' + mrd(t.zins.ist[t.A]) + ' (' + t.A + ') auf einen Tiefpunkt von ' + mrd(t.zinsMin.v) + ' (' + t.zinsMin.y + ') und lagen ' + t.B + ' bei ', B(mrd(t.zins.ist[t.B])), '.');
-    if (t.kredJahre.length) li('Von ' + t.A + ' bis ' + t.ohneKredit.filter((y) => y < t.kredJahre[0].jahr).slice(-1)[0] + ' kam der Bund ohne neue Kredite im Kernhaushalt aus. Von ' + t.kredJahre[0].jahr + ' bis ' + t.B + ' kamen insgesamt ', B(mrd(t.kredSum)), ' neue Schulden hinzu (Nettokreditaufnahme), am meisten ' + d3.greatest(t.kredJahre, (j) => j.kredite_ist).jahr + '.');
+    if (t.kredJahre.length) li('Von ' + t.A + ' bis ' + t.ohneKredit.filter((y) => y < t.kredJahre[0].jahr).slice(-1)[0] + ' kam der Bund ohne neue Kredite im Kernhaushalt aus. Von ' + t.kredJahre[0].jahr + ' bis ' + t.B + ' kamen im Kernhaushalt insgesamt ', B(mrd(t.kredSum)), ' neue Schulden hinzu (Nettokreditaufnahme), am meisten ' + d3.greatest(t.kredJahre, (j) => j.kredite_ist).jahr + '.');
     li('Steuereinnahmen deckten ' + t.A + ' ' + pf.format(t.deckA) + ' der Ausgaben, ' + t.B + ' ', B(pf.format(t.deckB)), '. Den Rest decken Kredite, Rücklagen und sonstige Einnahmen.');
+    const gvl = t.gv.filter((r) => r.gesamt != null), gl = gvl[gvl.length - 1], g0 = gvl[0];
+    if (gl && g0) li('Mit allen Sondervermögen und Extrahaushalten gab der Bund ' + gl.jahr + ' laut Eurostat ', B(mrd(gl.gesamt)), ' aus, im Kernhaushalt ' + mrd(gl.kern) + '. ' + g0.jahr + ' waren es ' + mrd(g0.gesamt) + ' und ' + mrd(g0.kern) + '.');
+    const def = t.gv.filter((r) => r.defizit != null && r.jahr >= 2020);
+    if (def.length) li('Das Finanzierungsdefizit des Bundes insgesamt (mit Sondervermögen, Eurostat) lag von ' + def[0].jahr + ' bis ' + def[def.length - 1].jahr + ' zusammen bei ', B(mrd(d3.sum(def, (r) => r.defizit))), '; im Kernhaushalt kamen im selben Zeitraum ' + mrd(d3.sum(t.gv.filter((r) => r.jahr >= def[0].jahr && r.jahr <= def[def.length - 1].jahr), (r) => r.nka)) + ' neue Kredite hinzu.');
+    const sl = t.sv.spalten[t.sv.spalten.length - 1];
+    if (sl) li('Für ' + sl.label.replace(' geplant', '') + ' sind in den Sondervermögen ', B(mrd(sl.summe)), ' Ausgaben geplant, davon ' + mrd(sl.kredite) + ' über Kredite; das entspricht ' + pf.format(sl.summe / sl.kern) + ' des Kernhaushalts (' + mrd(sl.kern) + ').');
     if (t.real19 != null) li('Das mittlere Einkommen nach Abzug der Preissteigerung veränderte sich von 2019 bis ' + t.realJahr + ' um ', colored(spct(t.real19), t.real19), ' (Bruch der Einkommensreihe 2020 beachten).');
   });
 
@@ -613,6 +682,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     if (first && first[k] && sel.jahr !== 2015) el.append(document.createTextNode(' · seit 2015 '), colored(signed(r[k] - first[k]) + ' (' + spct((r[k] - first[k]) / first[k]) + ')', r[k] - first[k]));
     const prev = d.data.find((x) => x.jahr === sel.jahr - 1 && x.gruppe === sel.gruppe);
     if (prev && prev[k]) el.append(document.createTextNode(' · zum Vorjahr '), colored(spct((r[k] - prev[k]) / prev[k]), r[k] - prev[k]));
+    if (window.addHinweis) window.addHinweis(el, sel.gruppe);
   });
 
   dash.draw('multiples', (el) => {
@@ -687,11 +757,12 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     const r = d.data.find((x) => x.thema === selDiff);
     if (!r) { el.textContent = '—'; return; }
     el.append(mk('b', '', r.name + ': '), document.createTextNode('2015 ' + mrd(r[k + '_2015']) + ' → ' + last + ' ' + mrd(r[k + '_' + last]) + ' · '), colored(signed(r[k + '_diff']) + (r[k + '_pct'] != null ? ' (' + spct(r[k + '_pct']) + ')' : ''), r[k + '_diff']));
+    if (window.addHinweis) window.addHinweis(el, r.thema);
   });
 
   const nfe = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
   let idxYear = null;
-  document.querySelectorAll('.st .c0, .st .c1, .st .c2, .st .c3').forEach((e) => { const i = Number(e.className.slice(1)); e.style.background = dash.colors[i]; });
+  document.querySelectorAll('.st .c0, .st .c1, .st .c2, .st .c3, .st .c4').forEach((e) => { const i = Number(e.className.slice(1)); e.style.background = dash.colors[i]; });
   dash.draw('vg', (el) => {
     const d = dash.data('vergleich_summe');
     if (d.status !== 'ok') { el.textContent = '—'; return; }
@@ -881,6 +952,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     const b = r[k + 2015], pv = r[k + (selCell.jahr - 1)];
     if (b && selCell.jahr !== 2015) el.append(document.createTextNode(' · seit 2015 '), colored(signed(v - b) + ' (' + spct((v - b) / b) + ')', v - b));
     if (pv) el.append(document.createTextNode(' · zum Vorjahr '), colored(signed(v - pv) + ' (' + spct((v - pv) / pv) + ')', v - pv));
+    if (window.addHinweis) window.addHinweis(el, r.thema);
   });
 
   dash.draw('belegtab', (el) => {
@@ -902,5 +974,6 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     tb.append(body); el.append(tb);
   });
 </script>
+<script src="gesamtbild.js"></script>
 </body>
 </html>
