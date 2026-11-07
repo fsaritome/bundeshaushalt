@@ -1,0 +1,60 @@
+name: Daten aktualisieren
+
+# Lädt monatlich die amtlichen Haushaltsdateien (bundeshaushalt.de) und das Medianeinkommen (Eurostat),
+# rechnet die Dateien in data/ neu und öffnet bei Änderungen einen Pull Request zur Prüfung.
+# Veröffentlicht wird erst, wenn jemand den Pull Request zusammenführt.
+
+on:
+  schedule:
+    - cron: "17 4 5 * *"   # am 5. jedes Monats, 04:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: daten-aktualisieren
+  cancel-in-progress: false
+
+jobs:
+  aktualisieren:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Haushaltsdaten neu berechnen
+        run: python3 pipeline/haushalt.py
+
+      - name: Medianeinkommen von Eurostat
+        run: python3 pipeline/median.py
+
+      - name: Pull Request bei Änderungen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data; then
+            echo "Keine Änderungen an den Daten."
+            exit 0
+          fi
+          branch="daten/$(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add data
+          git commit -m "Daten aktualisiert ($(date -u +%Y-%m-%d))"
+          git push --force -u origin "$branch"
+          {
+            echo "Automatischer Abgleich mit den amtlichen Quellen. Bitte vor dem Zusammenführen prüfen:"
+            echo
+            echo "- Sind die geänderten Werte plausibel (neues Haushaltsjahr, neue Haushaltsrechnung, Revision)?"
+            echo "- Stimmen Texte auf der Seite noch, die Jahre nennen (z. B. „2015–2026“)?"
+            echo
+            cat pipeline/bericht.md
+          } > /tmp/pr.md
+          if gh pr view "$branch" >/dev/null 2>&1; then
+            gh pr edit "$branch" --body-file /tmp/pr.md
+          else
+            gh pr create --base main --head "$branch" --title "Daten aktualisiert ($(date -u +%Y-%m-%d))" --body-file /tmp/pr.md
+          fi

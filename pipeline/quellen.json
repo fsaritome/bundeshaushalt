@@ -1,0 +1,40 @@
+{
+ "hinweis": "Pfade relativ zu https://www.bundeshaushalt.de/static/daten/. Soll = Haushaltsplan (CSV, Tsd. €), Ist = Haushaltsrechnung (XML, €). Neue Jahre werden über 'muster' automatisch gefunden.",
+ "muster": {"soll": "{jahr}/soll/HH_{jahr}_ALL.csv", "ist": "{jahr}/ist/rechnung_{jahr}.xml"},
+ "jahre": {
+  "2015": {"soll": "2015/soll/Haushalt_2015_utf8.csv", "ist": "2015/ist/rechnung_2015.xml"},
+  "2016": {"soll": "2016/soll/Haushalt_2016_utf8.csv", "ist": "2016/ist/rechnung_2016.xml"},
+  "2017": {"soll": "2017/soll/hh_2017_utf8.csv", "ist": "2017/ist/rechnung_2017.xml"},
+  "2018": {"soll": "2018/soll/hh_2018_utf8.csv", "ist": "2018/ist/rechnung_2018.xml"},
+  "2019": {"soll": "2019/soll/hh_2019_utf8.csv", "ist": "2019/ist/rechnung_2019.xml"},
+  "2020": {"soll": "2020/soll/hh_2020_utf8.csv", "ist": "2020/ist/rechnung_2020.xml"},
+  "2021": {"soll": "2021/soll/hh_2021_n2_utf8.csv", "ist": "2021/ist/rechnung_2021.xml"},
+  "2022": {"soll": "2022/soll/hh_2022_utf8.csv", "ist": "2022/ist/rechnung_2022.xml"},
+  "2023": {"soll": "2023/soll/HH_2023.csv", "ist": "2023/ist/rechnung_2023.xml"},
+  "2024": {"soll": "2024/soll/HH_2024_ALL.csv", "ist": "2024/ist/rechnung_2024.xml"},
+  "2025": {"soll": "2025/soll/HH_2025_ALL.csv", "ist": "2025/ist/rechnung_2025.xml"},
+  "2026": {"soll": "2026/soll/HH_2026_ALL.csv"}
+ },
+ "kontrollen": {"2026": 524540138},
+ "themen": {
+  "familie": {"name": "Familie & Kinder", "funktionen": ["231", "232", "237", "26", "27"]},
+  "rente": {"name": "Rente & Alterssicherung", "funktionen": ["221", "222", "226", "282"]},
+  "grundsicherung": {"name": "Bürgergeld, Grundsicherung & Arbeitsmarkt", "funktionen": ["25", "211", "225", "281", "285"]},
+  "gesundheit": {"name": "Gesundheit & Pflege", "funktionen": ["224", "227", "31", "284"]},
+  "sozial_sonst": {"name": "Sonstiges Soziales (Eingliederung, Asyl, Wohlfahrt)", "funktionen": ["21", "223", "229", "235", "236", "283", "286", "287", "29"]},
+  "kriegsfolgen": {"name": "Kriegsfolgen & Wiedergutmachung", "funktionen": ["24"]},
+  "verteidigung": {"name": "Verteidigung", "funktionen": ["03"]},
+  "verkehr": {"name": "Verkehr & digitale Netze", "funktionen": ["7"]},
+  "bildung": {"name": "Bildung & Forschung", "funktionen": ["11", "12", "13", "14", "15", "16"]},
+  "kultur": {"name": "Kultur, Religion & Sport", "funktionen": ["18", "19", "32"]},
+  "klima": {"name": "Energie, Klima & Umwelt", "funktionen": ["33", "34", "64"]},
+  "wohnen": {"name": "Wohnen & Städtebau (inkl. Wohngeld)", "funktionen": ["4", "233"]},
+  "wirtschaft": {"name": "Wirtschaft, Gewerbe & Regionalförderung", "funktionen": ["61", "62", "63", "65", "66", "68", "69"]},
+  "landwirtschaft": {"name": "Landwirtschaft & Ernährung", "funktionen": ["5"]},
+  "ausland": {"name": "Auswärtiges & Entwicklung", "funktionen": ["02"]},
+  "sicherheit": {"name": "Innere Sicherheit & Justiz", "funktionen": ["04", "05"]},
+  "verwaltung": {"name": "Politische Führung & Verwaltung", "funktionen": ["01", "06"]},
+  "zinsen": {"name": "Zinsen & Schulden", "funktionen": ["83"]},
+  "finanz": {"name": "Finanzwirtschaft (Rücklagen, Globalposten, Zuführungen)", "funktionen": ["81", "82", "84", "85", "86", "87", "88", "89"]}
+ }
+}
