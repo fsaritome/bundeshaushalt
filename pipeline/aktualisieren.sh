@@ -5,7 +5,14 @@
 #   bash pipeline/aktualisieren.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
-PY=$(command -v python3 || command -v python)
+# Unter Windows ist "python3" oft nur ein Platzhalter des Microsoft Store, daher wirklich ausprobieren.
+PY=""
+for c in python3 python py; do
+  if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)" >/dev/null 2>&1; then
+    PY="$c"; break
+  fi
+done
+[ -n "$PY" ] || { echo "Kein Python 3.9+ gefunden." >&2; exit 1; }
 
 if [ -n "$(git status --porcelain -- data)" ]; then
   echo "data/ hat ungespeicherte Änderungen, bitte erst committen oder verwerfen." >&2
