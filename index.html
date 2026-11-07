@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wohin fließt das Geld des Bundes?</title>
+<meta name="description" content="Der Bundeshaushalt 2015–2026 nachprüfbar: alle Ausgaben nach Themen, geplant und tatsächlich, im Vergleich zu Einkommen und Preisen. Gestaltet von Ferit Sari Tomé zusammen mit Claude.">
+<meta name="author" content="Ferit Sari Tomé">
+<style>
+:root {
+  --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-anthropic-serif: Georgia, "Times New Roman", serif;
+  --cds-font-size-caption: 0.8125rem; --cds-font-size-body: 1rem; --cds-font-size-heading: 1.125rem; --cds-font-size-title: 1.75rem;
+  --cds-font-weight-medium: 600;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 20px; --cds-gap-xl: 32px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 18px;
+  --cds-radius: 6px; --cds-dur-slow: 400ms; --cds-ease-out: cubic-bezier(.2,.8,.2,1);
+  --color-bg: #f7f6f2; --color-panel: #ffffff; --color-fg: #1b1b18; --color-fg-muted: #66645c; --color-border-line: #e3e1d9;
+  --color-ok: #1f8a4c; --color-bad: #c43c2f;
+  --cds-chart-grid: #eceae3; --cds-chart-axis: #9a978c; --cds-chart-muted: #c9c6bb; --cds-chart-reference: #8f8c80; --cds-chart-status-critical: #c43c2f;
+  --series-1: #2f6fdb; --series-2: #e07b2a; --series-3: #7b4fd1; --series-4: #1aa198; --series-5: #d6458b; --series-6: #8a9a1f; --series-7: #b5651d; --series-8: #4a90a4;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #151513; --color-panel: #1e1e1b; --color-fg: #ecebe6; --color-fg-muted: #a5a399; --color-border-line: #33322d;
+    --color-ok: #4cc27a; --color-bad: #ef6b5d;
+    --cds-chart-grid: #2c2b27; --cds-chart-axis: #77756c; --cds-chart-muted: #55534b; --cds-chart-reference: #8a887e; --cds-chart-status-critical: #ef6b5d;
+    --series-1: #6c9cf0; --series-2: #f0a05a; --series-3: #a585ee; --series-4: #4cc9bf; --series-5: #ee79b0; --series-6: #b3c447; --series-7: #d8904a; --series-8: #78b6c9;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); }
+.page { padding: clamp(16px, 4vw, 40px); }
+.dash-select { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background-color: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: 4px 8px; }
+
+.st { font-family: var(--font-anthropic-sans); color: var(--color-fg); max-width: 1100px; margin-inline: auto; }
+.st h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-sm); }
+.st .lede { color: var(--color-fg-muted); line-height: 1.5; margin: 0 0 var(--cds-gap-md); }
+.st .lede b { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.st h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: var(--cds-gap-xl) 0 var(--cds-gap-sm); }
+.st .card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); }
+.st .card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.st .note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0 var(--cds-gap-md); line-height: 1.45; }
+.st .controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: center; margin: 0 0 var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.st .controls label { display: flex; align-items: center; gap: var(--cds-gap-xs); }
+.st .legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.st .lg { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); background: none; border: 0; padding: 2px 0; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.st .lg i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.st .lg.on { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.st .lg.off { opacity: .45; }
+.sb-row { display: grid; grid-template-columns: 3.2rem 1fr; gap: var(--cds-gap-sm); align-items: center; margin-bottom: var(--cds-gap-sm); }
+.sb-y { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.sb-wrap { position: relative; }
+.sb-top { display: flex; justify-content: flex-end; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; margin-bottom: 2px; }
+.sb-bar { display: flex; height: 22px; border-radius: var(--cds-radius); overflow: hidden; background: var(--cds-chart-grid); }
+.sb-seg { height: 100%; cursor: pointer; border-right: 1px solid var(--color-panel); transition: opacity var(--cds-dur-slow); }
+.sb-seg:last-child { border-right: 0; }
+.st .detail { min-height: 2.6em; font-size: var(--cds-font-size-caption); margin-top: var(--cds-gap-sm); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: var(--cds-radius); background: var(--cds-chart-grid); }
+.st .detail b { font-variant-numeric: tabular-nums; }
+.st .mtiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: var(--cds-gap-md); margin-bottom: var(--cds-gap-md); }
+.st .mtile { border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); }
+.st .mtile .lab { display: block; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.st .mtile b { display: block; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; margin-top: var(--cds-gap-xs); }
+.st .lgx { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); display: inline-flex; align-items: center; gap: 4px; }
+.st .lgx i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.st .linechart { min-height: 240px; }
+.vj-block { padding: var(--cds-gap-sm) 0; border-bottom: 1px solid var(--color-border-line); }
+.vj-block:last-child { border-bottom: 0; }
+.vj-year { font-size: var(--cds-font-size-caption); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); margin-bottom: 4px; }
+.vj-line { display: grid; grid-template-columns: 7.5rem 1fr 4rem; gap: var(--cds-gap-sm); align-items: center; margin-bottom: 3px; font-size: var(--cds-font-size-caption); }
+.vj-n { color: var(--color-fg-muted); }
+.vj-v { text-align: right; font-variant-numeric: tabular-nums; }
+.vj-track { height: 8px; }
+.mu-row { padding: var(--cds-gap-sm) 0; border-bottom: 1px solid var(--color-border-line); }
+.mu-row:last-child { border-bottom: 0; }
+.mu-head { display: flex; justify-content: space-between; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); margin-bottom: var(--cds-gap-xs); }
+.mu-head .n { color: var(--color-fg); }
+.mu-head .v { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mu-cols { display: flex; align-items: flex-end; gap: 3px; height: 44px; }
+.mu-col { flex: 1; height: 100%; display: flex; align-items: flex-end; cursor: pointer; }
+.mu-bar { width: 100%; border-radius: 2px 2px 0 0; }
+.mu-col.sel .mu-bar { outline: 1px solid var(--color-fg); }
+.mu-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--color-fg-muted); margin-top: 2px; }
+.hb-row { margin-bottom: var(--cds-gap-sm); }
+.hb-top { display: flex; justify-content: space-between; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); margin-bottom: 3px; }
+.hb-top .v { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hb-top .n { color: var(--color-fg-muted); }
+.hb-track { height: 12px; border-radius: var(--cds-radius); background: var(--cds-chart-grid); position: relative; overflow: hidden; }
+.hb-bar { position: absolute; top: 0; bottom: 0; border-radius: var(--cds-radius); }
+.hb-mid { position: absolute; top: -2px; bottom: -2px; left: 50%; width: 1px; background: var(--cds-chart-axis); }
+.st .neg { color: var(--color-bad); }
+.st .about { font-size: var(--cds-font-size-body); line-height: 1.55; margin: 0 0 var(--cds-gap-sm); }
+.st .credit { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-lg); }
+.st .clickable { cursor: pointer; }
+.st .hb-row.clickable:hover .hb-track, .st .vj-block.clickable:hover { background-color: color-mix(in srgb, var(--color-fg) 4%, transparent); }
+.st .sel-row .n, .st .sel-row .vj-year { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.st td.cell { cursor: pointer; }
+.st td.cell.sel { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+.st .foot { margin-top: var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.st .pos { color: var(--color-ok); }
+.st .tablewrap { overflow: auto; max-height: 36rem; }
+.st table { border-collapse: collapse; font-size: var(--cds-font-size-caption); width: 100%; }
+.st th, .st td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.st th { position: sticky; top: 0; background: var(--color-panel); color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); z-index: 1; }
+.st th:first-child, .st td:first-child { text-align: left; position: sticky; left: 0; background: var(--color-panel); white-space: normal; min-width: 9rem; z-index: 1; }
+.st th:first-child { z-index: 2; }
+.st details { margin-top: var(--cds-gap-lg); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+.st details summary { cursor: pointer; color: var(--color-fg); }
+.st a { color: inherit; }
+@media (prefers-reduced-motion: no-preference) {
+  .sb-bar { animation: sbgrow var(--cds-dur-slow) var(--cds-ease-out); transform-origin: left; }
+  @keyframes sbgrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="dash-shim.js"></script>
+</head>
+<body>
+<main class="page">
+
+<div class="st" lang="de">
+  <h1>Wohin fließt das Geld des Bundes?</h1>
+  <p class="about">Diese Seite macht den Bundeshaushalt nachprüfbar. Sie zeigt alle Ausgaben des Bundes von 2015 bis 2026, geplant und tatsächlich, aufgeteilt nach Themen, und stellt sie dem mittleren Einkommen, den Preisen und den Ausgaben der Haushalte gegenüber. Alle Zahlen stammen aus amtlichen Quellen (Bundesfinanzministerium, Statistisches Bundesamt, Eurostat) und sind unten einzeln verlinkt.</p>
+  <p class="credit">Gestaltet von Ferit Sari Tomé zusammen mit Claude</p>
+  <p class="lede">Alles ist antippbar. Grün heißt gestiegen, Rot heißt gesunken, das ist keine Bewertung. 2015 plante der Bund <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2015">—</b>, 2026 sind es <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2026">—</b>.</p>
+
+  <div class="controls">
+    <label>Werte
+      <select class="dash-select sel-wert" aria-label="Werte">
+        <option value="soll">Geplant (Soll), 2015–2026</option>
+        <option value="ist">Tatsächlich (Ist), 2015–2025</option>
+      </select>
+    </label>
+    <label>Gestapelte Balken
+      <select class="dash-select sel-art" aria-label="Gestapelte Balken">
+        <option value="mrd">In Mrd. €</option>
+        <option value="anteil">Als Anteil (100 %)</option>
+      </select>
+    </label>
+  </div>
+
+  <h2 id="gestapelt">1 · Alle Jahre gestapelt</h2>
+  <div class="card">
+    <h3>Ausgaben je Jahr nach Thema</h3>
+    <p class="note">Alle 19 Themen einzeln, sortiert nach Größe. Tippe auf ein Thema in der Legende, um es hervorzuheben, oder auf ein Balkenstück für die genaue Zahl.</p>
+    <div class="legend" data-draw="legende" data-source="stapel"></div>
+    <div data-draw="stapelchart" data-source="stapel"></div>
+    <div class="detail" data-draw="detail" data-source="stapel">—</div>
+  </div>
+
+  <h2 id="themen">2 · Jedes Thema über alle Jahre</h2>
+  <div class="card">
+    <h3>Ein Thema pro Zeile, die Jahre nebeneinander</h3>
+    <p class="note">Mrd. €, sortiert nach dem letzten Jahr. Jede Säule ist ein Jahr, links 2015, rechts das letzte Jahr. Tippe auf eine Säule für die genaue Zahl. Grüne Säule = mehr als im Vorjahr, rote Säule = weniger. „Eigene Skala“ zeigt den Verlauf jedes Themas, „Gleiche Skala“ zeigt, wie groß die Themen im Vergleich sind.</p>
+    <div class="controls">
+      <label>Skala
+        <select class="dash-select sel-skala" aria-label="Skala">
+          <option value="eigen">Eigene Skala je Thema (Verlauf)</option>
+          <option value="gleich">Gleiche Skala für alle (Größe)</option>
+        </select>
+      </label>
+    </div>
+    <div data-draw="multiples" data-source="matrix"></div>
+  </div>
+
+  <h2 id="veraenderung">3 · Was sich verändert hat</h2>
+  <div class="card">
+    <h3>Veränderung je Thema vom ersten zum letzten Jahr</h3>
+    <p class="note">Mrd. €. Bei „Geplant“ von 2015 bis 2026, bei „Tatsächlich“ von 2015 bis 2025. Prozent = Veränderung gegenüber 2015. Tippe auf ein Thema für die Werte.</p>
+    <div data-draw="diffchart" data-source="veraenderung"></div>
+    <div class="detail" data-draw="diffdetail" data-source="veraenderung">—</div>
+  </div>
+
+  <h2 id="median">4 · Haushalt im Vergleich zum mittleren Einkommen</h2>
+  <div class="card">
+    <h3>Wie stark ist was seit 2015 gewachsen?</h3>
+    <p class="note">Index, 2015 = 100, tatsächliche Werte (unabhängig vom Schalter oben). Mittleres Einkommen = Median des Nettoäquivalenzeinkommens: Die Hälfte der Menschen in Deutschland hat mehr, die Hälfte weniger, nach Steuern und Abgaben und gewichtet nach Haushaltsgröße. (Median statt Durchschnitt: Der Durchschnitt liegt deutlich höher, weil wenige sehr hohe Einkommen ihn nach oben ziehen. Der Median zeigt, was ein typischer Mensch hat.) Preise = Verbraucherpreisindex.</p>
+    <div class="mtiles">
+      <div class="mtile"><span class="lab">Bundesausgaben seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=ausgaben">—</b></div>
+      <div class="mtile"><span class="lab">Steuereinnahmen des Bundes seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=steuern">—</b></div>
+      <div class="mtile"><span class="lab">Mittleres Einkommen seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=median">—</b></div>
+      <div class="mtile"><span class="lab">Preise seit 2015</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=preise">—</b></div>
+      <div class="mtile"><span class="lab">Mittleres Einkommen nach Abzug der Preissteigerung</span><b data-draw="vg" data-source="vergleich_summe" data-field="veraenderung" data-where="reihe=real">—</b></div>
+    </div>
+    <div class="legend"><span class="lgx"><i class="c0"></i>Bundesausgaben</span><span class="lgx"><i class="c1"></i>Steuereinnahmen des Bundes</span><span class="lgx"><i class="c2"></i>Mittleres Einkommen</span><span class="lgx"><i class="c3"></i>Preise</span></div>
+    <div class="linechart" data-draw="indexchart" data-source="vergleich"></div>
+    <div class="detail" data-draw="indexdetail" data-source="vergleich">—</div>
+    <p class="note">Hinweise: 2020 gibt es einen Bruch in der Einkommensreihe, weil die Erhebung in den Mikrozensus integriert wurde; der Sprung in diesem Jahr ist teilweise methodisch. Das Erhebungsjahr bezieht sich auf die Einkommen des Vorjahres. Ein Haushalt, der schneller wächst als die Einkommen, heißt nicht automatisch, dass jemand weniger hat, denn auch Bevölkerung, Preise und Aufgaben verändern sich.</p>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Veränderung zum Vorjahr</h3>
+    <p class="note">Prozent je Jahr. Nach links = gesunken, nach rechts = gestiegen. Je Jahr vier Balken: Bundesausgaben, Steuereinnahmen des Bundes, mittleres Einkommen und Preise. Tippe auf ein Jahr für die Beträge.</p>
+    <div data-draw="vorjahrchart" data-source="vorjahr"></div>
+    <div class="detail" data-draw="vjdetail" data-source="vergleich">—</div>
+  </div>
+
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Warum sich alles teurer anfühlt</h3>
+    <p class="note">Preisanstieg 2020 bis 2025 nach Bereichen. Was man oft kauft, wie Lebensmittel und Energie, ist deutlich stärker gestiegen als der Durchschnitt. Preise sinken nach einer Inflationswelle nicht zurück, sie steigen nur langsamer weiter. Tippe auf einen Bereich für Details.</p>
+    <div data-draw="katchart" data-source="preise_seit2020"></div>
+    <div class="detail" data-draw="katdetail" data-source="preise_seit2020">—</div>
+  </div>
+  <div class="card" style="margin-top: var(--cds-gap-md)">
+    <h3>Ausgaben eines Haushalts pro Monat</h3>
+    <p class="note">€ je Monat, Durchschnitt aller Haushalte (Konsumausgaben). Einen Median der Haushaltsausgaben veröffentlicht das Statistische Bundesamt nicht, daher hier der Durchschnitt (wird von Haushalten mit hohen Ausgaben nach oben gezogen). 2018 und 2023 aus einer anderen Erhebung (EVS), ohne Aufteilung. Ab 2022 geänderte Einteilung der Ausgaben. Tippe auf ein Jahr für die Veränderung.</p>
+    <div class="legend"><span class="lgx"><i class="c0"></i>Wohnen &amp; Energie</span><span class="lgx"><i class="c1"></i>Lebensmittel, Getränke, Tabak</span><span class="lgx"><i style="background: var(--cds-chart-muted)"></i>Alles andere</span></div>
+    <div data-draw="konsumchart" data-source="konsum"></div>
+    <div class="detail" data-draw="konsumdetail" data-source="konsum">—</div>
+  </div>
+
+  <h2 id="tabelle">5 · Alle Zahlen</h2>
+  <div class="card">
+    <h3>Jedes Thema in jedem Jahr</h3>
+    <p class="note">Mrd. €. Grün = gegenüber 2015 gewachsen, Rot = geschrumpft, je kräftiger, desto stärker. Seitlich wischen für alle Jahre, tippe auf eine Zahl für Details.</p>
+    <div class="tablewrap" data-draw="matrixtab" data-source="matrix"></div>
+    <div class="detail" data-draw="matrixdetail" data-source="matrix">—</div>
+  </div>
+
+  <details>
+    <summary>Quellen und Methode</summary>
+    <p>Alle Haushaltszahlen stammen aus den amtlichen Haushaltsplänen (Soll) und Haushaltsrechnungen (Ist) des Bundesfinanzministeriums, Kernhaushalt ohne Sondervermögen. Das mittlere Einkommen stammt aus der amtlichen Erhebung EU-SILC (Eurostat, Tabelle ilc_di03, für 2025 Destatis), Preise aus dem Verbraucherpreisindex, Haushaltsausgaben aus den Laufenden Wirtschaftsrechnungen und der EVS des Statistischen Bundesamts. Themen = Zusammenfassung des amtlichen Funktionenplans; jeder Euro zählt genau einmal. Das Kindergeld erscheint nicht als Ausgabe, weil es über die Steuer verrechnet wird.</p>
+    <div class="tablewrap" data-draw="belegtab" data-source="belege"></div>
+  </details>
+  <p class="foot">Gestaltet von Ferit Sari Tomé zusammen mit Claude. Daten: Bundesfinanzministerium, Statistisches Bundesamt, Eurostat.</p>
+</div>
+
+</main>
+<script>
+  const nf1 = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const nf0 = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+  const pf = new Intl.NumberFormat('de-DE', { style: 'percent', maximumFractionDigits: 1 });
+  const mrd = (v) => v == null || isNaN(v) ? '–' : (Math.abs(v) < 1 && v !== 0 ? nf0.format(v * 1000) + ' Mio. €' : nf1.format(v) + ' Mrd. €');
+  const zahl = (v) => v == null || isNaN(v) ? '–' : nf1.format(v);
+  const signed = (v) => v == null || isNaN(v) ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '±') + mrd(Math.abs(v));
+  const spct = (v) => v == null || !isFinite(v) ? '' : (v > 0 ? '+' : v < 0 ? '−' : '±') + pf.format(Math.abs(v));
+  const muted = 'var(--cds-chart-muted)';
+  const P = () => Object.assign({ wert: 'ist', art: 'mrd', skala: 'eigen', fokus: '' }, dash.params());
+  const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const pickedYear = {};
+  let picked = null;
+  let selDiff = null, selVj = null, selKat = null, selKonsum = null, selCell = null;
+  const UP = 'var(--color-ok)', DOWN = 'var(--color-bad)';
+  const tone = (v) => v < 0 ? 'neg' : 'pos';
+  const colored = (text, v) => mk('span', tone(v), text);
+  const palette = [...new Set([...dash.colors.slice(0, 8), ...d3.schemeTableau10, ...d3.schemeSet2, ...d3.schemeDark2])];
+  const colorOf = (i) => palette[i % palette.length];
+
+  dash.calc('stapel', {
+    inputs: ['themen'], title: 'Themen gruppiert',
+    description: 'Alle Themen je Jahr, Soll und Ist, mit Rang nach den Soll-Ausgaben 2026.',
+    fn: (themen) => {
+      const order = themen.filter((t) => t.jahr === 2026).sort((a, b) => b.soll - a.soll).map((t) => t.thema);
+      return themen.map((t) => ({ jahr: t.jahr, gruppe: t.thema, name: t.name, rang: order.indexOf(t.thema), soll: t.soll, ist: t.ist }));
+    }
+  });
+  dash.calc('veraenderung', {
+    inputs: ['themen'], title: 'Veränderung je Thema',
+    description: 'Je Thema: Soll 2015 und 2026, Ist 2015 und 2025, jeweils Differenz und Veränderung in Prozent.',
+    fn: (themen) => {
+      const by = new Map();
+      themen.forEach((t) => { if (!by.has(t.thema)) by.set(t.thema, { thema: t.thema, name: t.name }); const r = by.get(t.thema); r['s' + t.jahr] = t.soll; if (t.ist != null) r['i' + t.jahr] = t.ist; });
+      return [...by.values()].map((r) => ({ thema: r.thema, name: r.name, soll_2015: r.s2015, soll_2026: r.s2026, soll_diff: r.s2026 - r.s2015, soll_pct: r.s2015 ? (r.s2026 - r.s2015) / r.s2015 : null, ist_2015: r.i2015, ist_2025: r.i2025, ist_diff: r.i2025 - r.i2015, ist_pct: r.i2015 ? (r.i2025 - r.i2015) / r.i2015 : null }));
+    }
+  });
+  dash.calc('vergleich', {
+    inputs: ['jahre', 'median', 'preise'], title: 'Haushalt, Einkommen und Preise, Index',
+    description: 'Je Jahr 2015–2025: Ausgaben und Steuereinnahmen des Bundes (Ist), Median-Nettoäquivalenzeinkommen und Verbraucherpreise, jeweils als Index 2015 = 100; Realeinkommen = Einkommensindex geteilt durch Preisindex.',
+    fn: (jahre, median, preise) => {
+      const j0 = jahre.find((j) => j.jahr === 2015), m0 = median.find((m) => m.jahr === 2015), p0 = preise.find((p) => p.jahr === 2015);
+      return median.map((m) => {
+        const j = jahre.find((x) => x.jahr === m.jahr) || {};
+        const pr = preise.find((x) => x.jahr === m.jahr) || {};
+        return { jahr: m.jahr, ausgaben_ist: j.ausgaben_ist, steuern_ist: j.steuern_ist, median_eur: m.median_eur, bruch: m.bruch,
+          idx_ausgaben: j.ausgaben_ist != null ? 100 * j.ausgaben_ist / j0.ausgaben_ist : null,
+          idx_steuern: j.steuern_ist != null ? 100 * j.steuern_ist / j0.steuern_ist : null,
+          idx_median: 100 * m.median_eur / m0.median_eur,
+          vpi: pr.vpi, idx_preise: pr.vpi != null ? 100 * pr.vpi / p0.vpi : null,
+          idx_real: pr.vpi != null ? 100 * (m.median_eur / m0.median_eur) / (pr.vpi / p0.vpi) : null };
+      }).filter((r) => r.idx_ausgaben != null);
+    }
+  });
+  dash.calc('vergleich_summe', {
+    inputs: ['vergleich'], title: 'Veränderung seit 2015',
+    description: 'Veränderung von 2015 bis zum letzten Jahr mit allen drei Werten, in Prozent.',
+    fn: (vergleich) => {
+      const last = vergleich[vergleich.length - 1];
+      return [
+        { reihe: 'ausgaben', jahr: last.jahr, veraenderung: last.idx_ausgaben / 100 - 1 },
+        { reihe: 'steuern', jahr: last.jahr, veraenderung: last.idx_steuern / 100 - 1 },
+        { reihe: 'median', jahr: last.jahr, veraenderung: last.idx_median / 100 - 1 },
+        { reihe: 'preise', jahr: last.jahr, veraenderung: last.idx_preise / 100 - 1 },
+        { reihe: 'real', jahr: last.jahr, veraenderung: last.idx_real / 100 - 1 }
+      ];
+    }
+  });
+  dash.calc('vorjahr', {
+    inputs: ['vergleich'], title: 'Veränderung zum Vorjahr',
+    description: 'Je Jahr ab 2016: Veränderung gegenüber dem Vorjahr in Prozent für Bundesausgaben (Ist), Steuereinnahmen (Ist), Medianeinkommen und Verbraucherpreise.',
+    fn: (vergleich) => vergleich.slice(1).map((r, i) => {
+      const p = vergleich[i];
+      return { jahr: r.jahr, ausgaben_pct: r.ausgaben_ist / p.ausgaben_ist - 1, steuern_pct: r.steuern_ist / p.steuern_ist - 1, median_pct: r.median_eur / p.median_eur - 1, preise_pct: r.vpi / p.vpi - 1, bruch: r.bruch };
+    })
+  });
+  dash.calc('preise_seit2020', {
+    inputs: ['preise_kategorien'], title: 'Preisanstieg seit 2020',
+    description: 'Index 2025 (2020 = 100) minus 100, als Veränderung in Prozent.',
+    fn: (preise_kategorien) => preise_kategorien.map((k) => ({ kategorie: k.kategorie, veraenderung: k.index_2025 / 100 - 1 }))
+  });
+  dash.calc('matrix', {
+    inputs: ['themen'], title: 'Themen je Jahr',
+    description: 'Je Thema eine Zeile mit Soll (sJJJJ) und Ist (iJJJJ) aller Jahre.',
+    fn: (themen) => {
+      const by = new Map();
+      themen.forEach((t) => { if (!by.has(t.thema)) by.set(t.thema, { thema: t.thema, name: t.name }); const r = by.get(t.thema); r['s' + t.jahr] = t.soll; if (t.ist != null) r['i' + t.jahr] = t.ist; });
+      return [...by.values()];
+    }
+  });
+
+  document.querySelectorAll('.sel-wert').forEach((s) => s.addEventListener('change', () => { picked = null; dash.setParams({ wert: s.value }); }));
+  document.querySelectorAll('.sel-art').forEach((s) => s.addEventListener('change', () => dash.setParams({ art: s.value })));
+  document.querySelectorAll('.sel-skala').forEach((s) => s.addEventListener('change', () => dash.setParams({ skala: s.value })));
+  dash.onData(() => {
+    const p = P();
+    document.querySelectorAll('.sel-wert').forEach((s) => { s.value = p.wert; });
+    document.querySelectorAll('.sel-art').forEach((s) => { s.value = p.art; });
+    document.querySelectorAll('.sel-skala').forEach((s) => { s.value = p.skala; });
+  });
+
+  dash.draw('v', (el) => {
+    const d = dash.data(el.getAttribute('data-source'));
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const w = {}; el.getAttribute('data-where').split('&').forEach((x) => { const [k, v] = x.split('='); w[k] = decodeURIComponent(v); });
+    const r = d.data.find((row) => Object.keys(w).every((k) => String(row[k]) === w[k]));
+    el.textContent = mrd(r ? r[el.getAttribute('data-field')] : null);
+  });
+
+  const groups = () => {
+    const d = dash.data('stapel');
+    if (d.status !== 'ok') return [];
+    const m = new Map();
+    d.data.forEach((r) => { if (!m.has(r.gruppe)) m.set(r.gruppe, { gruppe: r.gruppe, name: r.name, rang: r.rang }); });
+    return [...m.values()].sort((a, b) => a.rang - b.rang);
+  };
+
+  dash.draw('legende', (el) => {
+    el.replaceChildren();
+    const f = P().fokus;
+    groups().forEach((g) => {
+      const b = mk('button', 'lg' + (f === g.gruppe ? ' on' : f ? ' off' : ''));
+      const i = mk('i'); i.style.background = colorOf(g.rang, g.gruppe);
+      b.append(i, document.createTextNode(g.name));
+      b.addEventListener('click', () => dash.setParams({ fokus: f === g.gruppe ? '' : g.gruppe }));
+      el.append(b);
+    });
+  });
+
+  dash.draw('stapelchart', (el) => {
+    const d = dash.data('stapel');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const p = P(); const k = p.wert;
+    const gs = groups();
+    const years = [...new Set(d.data.filter((r) => r[k] != null).map((r) => r.jahr))].sort();
+    const tot = new Map(years.map((y) => [y, d3.sum(d.data.filter((r) => r.jahr === y), (r) => r[k] || 0)]));
+    const max = d3.max([...tot.values()]) || 1;
+    years.forEach((y) => {
+      const row = mk('div', 'sb-row');
+      row.append(mk('div', 'sb-y', String(y)));
+      const wrap = mk('div', 'sb-wrap');
+      wrap.append(mk('div', 'sb-top', mrd(tot.get(y))));
+      const bar = mk('div', 'sb-bar');
+      bar.style.width = p.art === 'anteil' ? '100%' : (100 * tot.get(y) / max) + '%';
+      gs.forEach((g) => {
+        const r = d.data.find((x) => x.jahr === y && x.gruppe === g.gruppe);
+        if (!r || !r[k]) return;
+        const seg = mk('div', 'sb-seg');
+        seg.style.width = (100 * r[k] / tot.get(y)) + '%';
+        seg.style.background = colorOf(g.rang, g.gruppe);
+        if (p.fokus && p.fokus !== g.gruppe) seg.style.opacity = '.2';
+        seg.addEventListener('click', () => { picked = { jahr: y, gruppe: g.gruppe }; dash.draw('detail'); });
+        bar.append(seg);
+      });
+      wrap.append(bar); row.append(wrap); el.append(row);
+    });
+  });
+
+  dash.draw('detail', (el) => {
+    const d = dash.data('stapel');
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const p = P(); const k = p.wert;
+    const sel = picked || (p.fokus ? { jahr: k === 'ist' ? 2025 : 2026, gruppe: p.fokus } : null);
+    if (!sel) { el.textContent = '—'; return; }
+    const r = d.data.find((x) => x.jahr === sel.jahr && x.gruppe === sel.gruppe);
+    if (!r || r[k] == null) { el.textContent = '—'; return; }
+    const total = d3.sum(d.data.filter((x) => x.jahr === sel.jahr), (x) => x[k] || 0);
+    const first = d.data.find((x) => x.jahr === 2015 && x.gruppe === sel.gruppe);
+    el.append(mk('b', '', r.name + ' ' + sel.jahr + ': ' + mrd(r[k])), document.createTextNode(' · ' + pf.format(r[k] / total) + ' aller Ausgaben'));
+    if (first && first[k] && sel.jahr !== 2015) el.append(document.createTextNode(' · seit 2015 '), colored(signed(r[k] - first[k]) + ' (' + spct((r[k] - first[k]) / first[k]) + ')', r[k] - first[k]));
+    const prev = d.data.find((x) => x.jahr === sel.jahr - 1 && x.gruppe === sel.gruppe);
+    if (prev && prev[k]) el.append(document.createTextNode(' · zum Vorjahr '), colored(spct((r[k] - prev[k]) / prev[k]), r[k] - prev[k]));
+  });
+
+  dash.draw('multiples', (el) => {
+    const d = dash.data('matrix');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const p = P(); const k = p.wert === 'ist' ? 'i' : 's';
+    const last = k === 'i' ? 2025 : 2026;
+    const years = d3.range(2015, last + 1);
+    const rows = d.data.slice().sort((a, b) => (b[k + last] || 0) - (a[k + last] || 0));
+    const gmax = d3.max(rows, (r) => d3.max(years, (y) => r[k + y] || 0)) || 1;
+    rows.forEach((r) => {
+      const max = p.skala === 'gleich' ? gmax : (d3.max(years, (y) => r[k + y] || 0) || 1);
+      const row = mk('div', 'mu-row');
+      const head = mk('div', 'mu-head');
+      const first = r[k + 2015], end = r[k + last];
+      const sel = pickedYear[r.thema];
+      const info = mk('span', 'v');
+      if (sel != null) { info.textContent = sel + ': ' + mrd(r[k + sel]); const pv = r[k + (sel - 1)]; if (pv) info.append(colored(' ' + spct((r[k + sel] - pv) / pv) + ' zum Vorjahr', r[k + sel] - pv)); }
+      else {
+        info.textContent = mrd(end);
+        if (first) info.append(mk('span', end < first ? 'neg' : 'pos', ' ' + spct((end - first) / first) + ' seit 2015'));
+      }
+      head.append(mk('span', 'n', r.name), info);
+      const cols = mk('div', 'mu-cols');
+      years.forEach((y) => {
+        const v = r[k + y] || 0;
+        const c = mk('div', 'mu-col' + (sel === y ? ' sel' : ''));
+        const bar = mk('div', 'mu-bar');
+        bar.style.height = Math.max(2, 100 * Math.max(0, v) / max) + '%';
+        const pv = r[k + (y - 1)];
+        const base = y === 2015 || pv == null ? muted : (v >= pv ? UP : DOWN);
+        bar.style.background = sel === y || y === last ? base : 'color-mix(in srgb, ' + base + ' 60%, transparent)';
+        c.append(bar);
+        c.addEventListener('click', () => { pickedYear[r.thema] = pickedYear[r.thema] === y ? null : y; dash.draw('multiples'); });
+        cols.append(c);
+      });
+      const axis = mk('div', 'mu-axis');
+      axis.append(mk('span', '', '2015'), mk('span', '', String(last)));
+      row.append(head, cols, axis);
+      el.append(row);
+    });
+  });
+
+  dash.draw('diffchart', (el) => {
+    const d = dash.data('veraenderung');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const k = P().wert;
+    const rows = d.data.map((r) => ({ thema: r.thema, name: r.name, v: r[k + '_diff'], p: r[k + '_pct'] })).filter((r) => r.v != null && !isNaN(r.v)).sort((a, b) => b.v - a.v);
+    const max = d3.max(rows, (r) => Math.abs(r.v)) || 1;
+    rows.forEach((r) => {
+      const row = mk('div', 'hb-row clickable' + (selDiff === r.thema ? ' sel-row' : ''));
+      row.addEventListener('click', () => { selDiff = selDiff === r.thema ? null : r.thema; dash.draw('diffchart'); dash.draw('diffdetail'); });
+      const top = mk('div', 'hb-top');
+      const v = mk('span', 'v', signed(r.v));
+      if (r.p != null) v.append(mk('span', r.v < 0 ? 'neg' : 'pos', ' ' + spct(r.p)));
+      top.append(mk('span', 'n', r.name), v);
+      const tr = mk('div', 'hb-track');
+      const bar = mk('div', 'hb-bar'); const w = 50 * Math.abs(r.v) / max;
+      bar.style.width = w + '%'; bar.style.left = r.v < 0 ? (50 - w) + '%' : '50%';
+      bar.style.background = r.v < 0 ? DOWN : UP;
+      tr.append(bar, mk('div', 'hb-mid'));
+      row.append(top, tr); el.append(row);
+    });
+  });
+  dash.draw('diffdetail', (el) => {
+    const d = dash.data('veraenderung');
+    el.replaceChildren();
+    if (d.status !== 'ok' || !selDiff) { el.textContent = '—'; return; }
+    const k = P().wert; const last = k === 'ist' ? 2025 : 2026;
+    const r = d.data.find((x) => x.thema === selDiff);
+    if (!r) { el.textContent = '—'; return; }
+    el.append(mk('b', '', r.name + ': '), document.createTextNode('2015 ' + mrd(r[k + '_2015']) + ' → ' + last + ' ' + mrd(r[k + '_' + last]) + ' · '), colored(signed(r[k + '_diff']) + (r[k + '_pct'] != null ? ' (' + spct(r[k + '_pct']) + ')' : ''), r[k + '_diff']));
+  });
+
+  const nfe = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+  let idxYear = null;
+  document.querySelectorAll('.st .c0, .st .c1, .st .c2, .st .c3').forEach((e) => { const i = Number(e.className.slice(1)); e.style.background = dash.colors[i]; });
+  dash.draw('vg', (el) => {
+    const d = dash.data('vergleich_summe');
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const r = d.data.find((x) => x.reihe === el.getAttribute('data-where').split('=')[1]);
+    el.textContent = r ? spct(r.veraenderung) : '–';
+  });
+  dash.draw('indexchart', (el) => {
+    const d = dash.data('vergleich');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const rows = d.data;
+    const W = Math.max(280, el.clientWidth || 600), H = 240, m = { t: 10, r: 44, b: 24, l: 34 };
+    const x = d3.scaleLinear([rows[0].jahr, rows[rows.length - 1].jahr], [m.l, W - m.r]);
+    const keys = ['idx_ausgaben', 'idx_steuern', 'idx_median', 'idx_preise'];
+    const vmax = d3.max(rows, (r) => d3.max(keys, (k) => r[k])), vmin = d3.min(rows, (r) => d3.min(keys, (k) => r[k]));
+    const y = d3.scaleLinear([Math.min(95, vmin), vmax * 1.03], [H - m.b, m.t]).nice();
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).style('display', 'block');
+    y.ticks(4).forEach((v) => {
+      svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(v)).attr('y2', y(v)).attr('stroke', v === 100 ? 'var(--cds-chart-reference)' : 'var(--cds-chart-grid)');
+      svg.append('text').attr('x', m.l - 4).attr('y', y(v) + 4).attr('text-anchor', 'end').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text(nfe.format(v));
+    });
+    const narrow = W < 460;
+    rows.forEach((r, i) => { if (!narrow || i % 2 === 0) svg.append('text').attr('x', x(r.jahr)).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text(narrow ? '’' + String(r.jahr).slice(2) : r.jahr); });
+    const lr = rows[rows.length - 1];
+    keys.forEach((k, i) => {
+      const line = d3.line().x((r) => x(r.jahr)).y((r) => y(r[k]));
+      svg.append('path').attr('d', line(rows)).attr('fill', 'none').attr('stroke', dash.colors[i]).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+    });
+    const ends = keys.map((k, i) => ({ i, v: lr[k], y: y(lr[k]) })).sort((a, b) => a.y - b.y);
+    for (let j = 1; j < ends.length; j++) if (ends[j].y - ends[j - 1].y < 13) ends[j].y = ends[j - 1].y + 13;
+    ends.forEach((e) => svg.append('text').attr('x', x(lr.jahr) + 5).attr('y', e.y + 4).attr('font-size', 11).attr('fill', dash.colors[e.i]).text(nfe.format(e.v)));
+    if (idxYear != null) {
+      const r = rows.find((q) => q.jahr === idxYear);
+      if (r) { svg.append('line').attr('x1', x(r.jahr)).attr('x2', x(r.jahr)).attr('y1', m.t).attr('y2', H - m.b).attr('stroke', 'var(--cds-chart-axis)'); keys.forEach((k, i) => svg.append('circle').attr('cx', x(r.jahr)).attr('cy', y(r[k])).attr('r', 3.5).attr('fill', dash.colors[i])); }
+    }
+    const step = (x(rows[1].jahr) - x(rows[0].jahr));
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => x(r.jahr) - step / 2).attr('width', step).attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'transparent').style('cursor', 'pointer')
+      .on('click pointerenter', (ev, r) => { if (idxYear === r.jahr) return; idxYear = r.jahr; dash.draw('indexchart'); dash.draw('indexdetail'); });
+  });
+  dash.draw('indexdetail', (el) => {
+    const d = dash.data('vergleich');
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const r = d.data.find((q) => q.jahr === (idxYear ?? d.data[d.data.length - 1].jahr));
+    if (!r) { el.textContent = '—'; return; }
+    el.append(mk('b', '', String(r.jahr) + ': '), document.createTextNode('Bundesausgaben ' + mrd(r.ausgaben_ist) + ' (Index ' + nfe.format(r.idx_ausgaben) + ') · Steuern ' + mrd(r.steuern_ist) + ' (Index ' + nfe.format(r.idx_steuern) + ') · Mittleres Einkommen ' + nfe.format(r.median_eur) + ' € im Jahr (Index ' + nfe.format(r.idx_median) + ') · Preise Index ' + nfe.format(r.idx_preise) + ' · Einkommen nach Preissteigerung Index ' + nfe.format(r.idx_real) + (r.bruch ? ' · Bruch in der Einkommensreihe' : '')));
+  });
+
+  dash.draw('vorjahrchart', (el) => {
+    const d = dash.data('vorjahr');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const keys = [['ausgaben_pct', 'Bundesausgaben'], ['steuern_pct', 'Steuern'], ['median_pct', 'Einkommen'], ['preise_pct', 'Preise']];
+    const max = d3.max(d.data, (r) => d3.max(keys, ([k]) => Math.abs(r[k]))) || 1;
+    d.data.forEach((r) => {
+      const block = mk('div', 'vj-block clickable' + (selVj === r.jahr ? ' sel-row' : ''));
+      block.addEventListener('click', () => { selVj = selVj === r.jahr ? null : r.jahr; dash.draw('vorjahrchart'); dash.draw('vjdetail'); });
+      block.append(mk('div', 'vj-year', String(r.jahr) + (r.bruch ? ' · Bruch in der Einkommensreihe' : '')));
+      keys.forEach(([k, name], i) => {
+        const v = r[k];
+        const line = mk('div', 'vj-line');
+        line.append(mk('span', 'vj-n', name));
+        const tr = mk('div', 'hb-track vj-track');
+        const bar = mk('div', 'hb-bar'); const w = 50 * Math.abs(v) / max;
+        bar.style.width = w + '%'; bar.style.left = v < 0 ? (50 - w) + '%' : '50%';
+        bar.style.background = v < 0 ? DOWN : UP;
+        tr.append(bar, mk('div', 'hb-mid'));
+        line.append(tr, mk('span', 'vj-v ' + (v < 0 ? 'neg' : 'pos'), spct(v)));
+        block.append(line);
+      });
+      el.append(block);
+    });
+  });
+
+  dash.draw('katchart', (el) => {
+    const d = dash.data('preise_seit2020');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const max = d3.max(d.data, (r) => r.veraenderung) || 1;
+    d.data.slice().sort((a, b) => b.veraenderung - a.veraenderung).forEach((r) => {
+      const row = mk('div', 'hb-row clickable' + (selKat === r.kategorie ? ' sel-row' : ''));
+      row.addEventListener('click', () => { selKat = selKat === r.kategorie ? null : r.kategorie; dash.draw('katchart'); dash.draw('katdetail'); });
+      const top = mk('div', 'hb-top');
+      top.append(mk('span', 'n', r.kategorie), mk('span', 'v ' + tone(r.veraenderung), spct(r.veraenderung)));
+      const tr = mk('div', 'hb-track'); const bar = mk('div', 'hb-bar');
+      bar.style.left = '0'; bar.style.width = (100 * r.veraenderung / max) + '%';
+      bar.style.background = r.veraenderung < 0 ? DOWN : (r.kategorie.startsWith('Alle') ? 'color-mix(in srgb, ' + UP + ' 55%, transparent)' : UP);
+      tr.append(bar); row.append(top, tr); el.append(row);
+    });
+  });
+  dash.draw('konsumchart', (el) => {
+    const d = dash.data('konsum');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const max = d3.max(d.data, (r) => r.gesamt) || 1;
+    const eur = (v) => nfe.format(v) + ' €';
+    d.data.forEach((r) => {
+      const row = mk('div', 'sb-row clickable' + (selKonsum === r.jahr ? ' sel-row' : ''));
+      row.addEventListener('click', () => { selKonsum = selKonsum === r.jahr ? null : r.jahr; dash.draw('konsumchart'); dash.draw('konsumdetail'); });
+      row.append(mk('div', 'sb-y', String(r.jahr)));
+      const wrap = mk('div', 'sb-wrap');
+      const top = mk('div', 'sb-top', eur(r.gesamt) + (r.erhebung === 'EVS' ? ' (EVS)' : '') + (r.wohnen != null ? ' · Wohnen ' + eur(r.wohnen) + ' · Lebensmittel ' + eur(r.nahrung) : ''));
+      wrap.append(top);
+      const bar = mk('div', 'sb-bar'); bar.style.width = (100 * r.gesamt / max) + '%';
+      const parts = r.wohnen != null ? [[r.wohnen, dash.colors[0]], [r.nahrung, dash.colors[1]], [r.gesamt - r.wohnen - r.nahrung, 'var(--cds-chart-muted)']] : [[r.gesamt, 'var(--cds-chart-muted)']];
+      parts.forEach(([v, c]) => { const s = mk('div', 'sb-seg'); s.style.width = (100 * v / r.gesamt) + '%'; s.style.background = c; bar.append(s); });
+      wrap.append(bar); row.append(wrap); el.append(row);
+    });
+  });
+
+  dash.draw('matrixtab', (el) => {
+    const d = dash.data('matrix');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const k = P().wert === 'ist' ? 'i' : 's';
+    const last = k === 'i' ? 2025 : 2026;
+    const years = d3.range(2015, last + 1);
+    const tb = mk('table'); tb.setAttribute('data-source', 'matrix'); tb.setAttribute('data-row-key', 'thema');
+    const hr = mk('tr');
+    const h0 = mk('th', '', 'Thema'); h0.setAttribute('data-field', 'name'); hr.append(h0);
+    years.forEach((y) => { const h = mk('th', '', String(y)); h.setAttribute('data-field', k + y); hr.append(h); });
+    const th = mk('thead'); th.append(hr); tb.append(th);
+    const body = mk('tbody');
+    d.data.slice().sort((a, b) => (b[k + last] || 0) - (a[k + last] || 0)).forEach((r) => {
+      const tr = mk('tr'); tr.setAttribute('data-key', r.thema);
+      tr.append(mk('td', '', r.name));
+      const base = r[k + 2015];
+      years.forEach((y) => {
+        const v = r[k + y];
+        const td = mk('td', 'cell' + (selCell && selCell.thema === r.thema && selCell.jahr === y ? ' sel' : ''), zahl(v));
+        if (base && v != null) {
+          const ch = (v - base) / Math.abs(base);
+          const a = Math.min(0.55, Math.abs(ch) * 0.35);
+          td.style.background = `color-mix(in srgb, ${ch >= 0 ? UP : DOWN} ${Math.round(a * 100)}%, transparent)`;
+        }
+        td.addEventListener('click', () => { selCell = selCell && selCell.thema === r.thema && selCell.jahr === y ? null : { thema: r.thema, jahr: y }; dash.draw('matrixtab'); dash.draw('matrixdetail'); });
+        tr.append(td);
+      });
+      body.append(tr);
+    });
+    tb.append(body); el.append(tb);
+  });
+
+  dash.draw('vjdetail', (el) => {
+    const d = dash.data('vergleich');
+    el.replaceChildren();
+    if (d.status !== 'ok' || selVj == null) { el.textContent = '—'; return; }
+    const r = d.data.find((x) => x.jahr === selVj), p = d.data.find((x) => x.jahr === selVj - 1);
+    if (!r || !p) { el.textContent = '—'; return; }
+    el.append(mk('b', '', (selVj - 1) + ' → ' + selVj + ': '),
+      document.createTextNode('Bundesausgaben ' + mrd(p.ausgaben_ist) + ' → ' + mrd(r.ausgaben_ist) + ' '), colored('(' + signed(r.ausgaben_ist - p.ausgaben_ist) + ')', r.ausgaben_ist - p.ausgaben_ist),
+      document.createTextNode(' · Steuern ' + mrd(p.steuern_ist) + ' → ' + mrd(r.steuern_ist) + ' '), colored('(' + signed(r.steuern_ist - p.steuern_ist) + ')', r.steuern_ist - p.steuern_ist),
+      document.createTextNode(' · Mittleres Einkommen ' + nfe.format(p.median_eur) + ' € → ' + nfe.format(r.median_eur) + ' € '), colored('(' + (r.median_eur - p.median_eur >= 0 ? '+' : '−') + nfe.format(Math.abs(r.median_eur - p.median_eur)) + ' €)', r.median_eur - p.median_eur),
+      document.createTextNode(' · Preisindex ' + nf1.format(p.vpi) + ' → ' + nf1.format(r.vpi)));
+  });
+  dash.draw('katdetail', (el) => {
+    const d = dash.data('preise_seit2020');
+    el.replaceChildren();
+    if (d.status !== 'ok' || !selKat) { el.textContent = '—'; return; }
+    const r = d.data.find((x) => x.kategorie === selKat), all = d.data.find((x) => x.kategorie.startsWith('Alle'));
+    if (!r) { el.textContent = '—'; return; }
+    el.append(mk('b', '', r.kategorie + ': '), document.createTextNode('Was 2020 100 € gekostet hat, kostet 2025 ' + nf1.format(100 * (1 + r.veraenderung)) + ' € '), colored('(' + spct(r.veraenderung) + ')', r.veraenderung));
+    if (all && all !== r) el.append(document.createTextNode(' · Durchschnitt aller Preise ' + spct(all.veraenderung)));
+  });
+  dash.draw('konsumdetail', (el) => {
+    const d = dash.data('konsum');
+    el.replaceChildren();
+    if (d.status !== 'ok' || selKonsum == null) { el.textContent = '—'; return; }
+    const i = d.data.findIndex((x) => x.jahr === selKonsum);
+    const r = d.data[i], p = d.data[i - 1];
+    if (!r) { el.textContent = '—'; return; }
+    const eur = (v) => nfe.format(v) + ' €';
+    el.append(mk('b', '', r.jahr + ': '), document.createTextNode(eur(r.gesamt) + ' pro Monat' + (r.erhebung === 'EVS' ? ' (EVS)' : '')));
+    if (p) el.append(document.createTextNode(' · gegenüber ' + p.jahr + ' '), colored((r.gesamt - p.gesamt >= 0 ? '+' : '−') + eur(Math.abs(r.gesamt - p.gesamt)) + ' (' + spct((r.gesamt - p.gesamt) / p.gesamt) + ')', r.gesamt - p.gesamt));
+    const f = d.data.find((x) => x.jahr === 2017);
+    if (f && f !== r) el.append(document.createTextNode(' · seit 2017 '), colored(spct((r.gesamt - f.gesamt) / f.gesamt), r.gesamt - f.gesamt));
+  });
+  dash.draw('matrixdetail', (el) => {
+    const d = dash.data('matrix');
+    el.replaceChildren();
+    if (d.status !== 'ok' || !selCell) { el.textContent = '—'; return; }
+    const k = P().wert === 'ist' ? 'i' : 's';
+    const r = d.data.find((x) => x.thema === selCell.thema);
+    const v = r ? r[k + selCell.jahr] : null;
+    if (v == null) { el.textContent = '—'; return; }
+    el.append(mk('b', '', r.name + ' ' + selCell.jahr + ': ' + mrd(v)));
+    const b = r[k + 2015], pv = r[k + (selCell.jahr - 1)];
+    if (b && selCell.jahr !== 2015) el.append(document.createTextNode(' · seit 2015 '), colored(signed(v - b) + ' (' + spct((v - b) / b) + ')', v - b));
+    if (pv) el.append(document.createTextNode(' · zum Vorjahr '), colored(signed(v - pv) + ' (' + spct((v - pv) / pv) + ')', v - pv));
+  });
+
+  dash.draw('belegtab', (el) => {
+    const d = dash.data('belege');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const tb = mk('table'); tb.setAttribute('data-source', 'belege'); tb.setAttribute('data-row-key', 'nr');
+    const hr = mk('tr');
+    [['nr', 'Nr.'], ['jahr', 'Jahr'], ['art', 'Art'], ['url', 'Quelle']].forEach(([f, l]) => { const h = mk('th', '', l); h.setAttribute('data-field', f); hr.append(h); });
+    const th = mk('thead'); th.append(hr); tb.append(th);
+    const body = mk('tbody');
+    d.data.forEach((r) => {
+      const tr = mk('tr');
+      tr.append(mk('td', '', String(r.nr)), mk('td', '', String(r.jahr)), mk('td', '', r.art));
+      const td = mk('td');
+      if (/^https:\/\//.test(r.url || '')) { const a = mk('a', '', r.hinweis || r.url); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; td.append(a); } else td.textContent = r.hinweis || '';
+      tr.append(td); body.append(tr);
+    });
+    tb.append(body); el.append(tb);
+  });
+</script>
+</body>
+</html>
