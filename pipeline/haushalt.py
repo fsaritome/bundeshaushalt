@@ -14,6 +14,8 @@ import hashlib
 import io
 import json
 import sys
+import time
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import date
@@ -37,14 +39,27 @@ def fetch(rel):
     CACHE.mkdir(parents=True, exist_ok=True)
     local = CACHE / rel.replace("/", "_")
     if not local.exists():
-        req = urllib.request.Request(BASE + rel, headers=UA)
-        try:
-            with urllib.request.urlopen(req, timeout=120) as r:
-                body = r.read()
-        except urllib.error.HTTPError as e:
-            if e.code == 404:
-                return None
-            raise
+        body = None
+        for attempt in range(5):
+            req = urllib.request.Request(BASE + rel, headers=UA)
+            try:
+                with urllib.request.urlopen(req, timeout=120) as r:
+                    body = r.read()
+                break
+            except urllib.error.HTTPError as e:
+                if e.code == 404:
+                    return None
+                if e.code in (429, 500, 502, 503, 504) and attempt < 4:
+                    wait = 15 * (attempt + 1)
+                    print(f"  {rel}: HTTP {e.code}, neuer Versuch in {wait} s", file=sys.stderr)
+                    time.sleep(wait)
+                    continue
+                fail(f"{rel}: HTTP {e.code} von bundeshaushalt.de (nach {attempt + 1} Versuchen)")
+            except urllib.error.URLError as e:
+                if attempt < 4:
+                    time.sleep(15 * (attempt + 1))
+                    continue
+                fail(f"{rel}: nicht erreichbar ({e.reason})")
         # Die Website liefert für fehlende Dateien teils eine HTML-Seite statt 404.
         if body[:200].lstrip().lower().startswith((b"<!doctype html", b"<html")):
             return None
