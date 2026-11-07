@@ -1,0 +1,75 @@
+name: Seite verschlüsselt veröffentlichen
+
+# Baut die Seite für GitHub Pages und verschlüsselt index.html mit StaticCrypt (AES im Browser).
+# Das Passwort steht nur im Repository-Secret STATICRYPT_PASSWORD, nie im Code.
+# Hinweis: Das ist ein Sichtschutz, kein echter Zugriffsschutz. Code und Daten bleiben in diesem
+# öffentlichen Repository lesbar, auch die Dateien in data/ sind ohne Passwort abrufbar.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Passwort vorhanden?
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+        run: |
+          if [ -z "$STATICRYPT_PASSWORD" ]; then
+            echo "::error::Secret STATICRYPT_PASSWORD fehlt (Settings → Secrets and variables → Actions). Ohne Passwort wird nichts veröffentlicht."
+            exit 1
+          fi
+
+      - name: Dateien zusammenstellen
+        run: |
+          mkdir -p _site
+          cp -r dash-shim.js gesamtbild.js transparenz.js vendor data .nojekyll _site/
+
+      - name: index.html verschlüsseln
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+        run: |
+          npx --yes staticrypt@3.5.4 index.html -d _site --short --remember 30 -c false \
+            --template-title "Wohin fließt das Geld des Bundes?" \
+            --template-instructions "Diese Seite ist ein KI-Experiment und noch nicht öffentlich. Bitte das Passwort eingeben." \
+            --template-button "Öffnen" \
+            --template-placeholder "Passwort" \
+            --template-error "Falsches Passwort" \
+            --template-remember "Angemeldet bleiben (30 Tage)" \
+            --template-toggle-hide "Passwort verbergen" \
+            --template-toggle-show "Passwort anzeigen" \
+            --template-color-primary "#2f6fdb" \
+            --template-color-secondary "#f7f6f2"
+          # Kontrolle: Im veröffentlichten index.html darf kein Klartext der Seite stehen.
+          if grep -q "Was diese Seite zeigt" _site/index.html; then
+            echo "::error::index.html ist nicht verschlüsselt"; exit 1
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  veroeffentlichen:
+    needs: bauen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
