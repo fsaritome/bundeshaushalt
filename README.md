@@ -75,6 +75,12 @@ python3 pipeline/median.py --check
 
 Wenn ein neues Haushaltsjahr dazukommt, nennen Seite und Trends die Jahre automatisch, nur Texte mit festen Jahreszahlen (z. B. „2015–2026“ im Kopf) müssen im Pull Request angepasst werden.
 
+## Passwortschutz
+
+Die veröffentlichte Seite ist mit [StaticCrypt](https://github.com/robinmoisson/staticrypt) verschlüsselt: Der Workflow `.github/workflows/seite.yml` verschlüsselt `index.html` bei jedem Push auf `main` und veröffentlicht sie über GitHub Pages. Das Passwort steht nur im Repository-Secret `STATICRYPT_PASSWORD`; ohne Secret wird nichts veröffentlicht.
+
+Das ist ein **Sichtschutz, kein Zugriffsschutz**: Code, Texte und Daten sind in diesem öffentlichen Repository lesbar, und die Dateien in `data/` sind auch auf der Seite ohne Passwort abrufbar. Passwort ändern: Secret neu setzen und den Workflow erneut ausführen. Schutz aufheben: unter *Settings → Pages* wieder „Deploy from a branch“ (`main`, `/`) wählen.
+
 ## Lokal ansehen
 
 ```
