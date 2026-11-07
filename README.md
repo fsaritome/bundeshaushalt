@@ -45,7 +45,7 @@ und dann `http://localhost:8000` öffnen.
 - **Entwurf 2027:** Deutscher Bundestag (bundestag.de, hib, mitmischen.de); ergänzend Bundesrechnungshof (über Table.Media), KfW Research, Subventionsbericht der Bundesregierung (berichtet vom VDIV).
 - **Statistisches Bundesamt:** © Statistisches Bundesamt (Destatis), 2026, [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0). VPI-Jahreswerte zusammengestellt vom AGV, EVS-Werte berichtet vom VDIV.
 - **Eurostat:** ilc_di03 (EU-SILC), © Europäische Union, Weiterverwendung gemäß der [Eurostat-Urheberrechtsrichtlinie](https://ec.europa.eu/eurostat/about-us/policies/copyright); abgerufen über [DBnomics](https://db.nomics.world).
-- **Software:** [D3.js](https://d3js.org) (© Mike Bostock, ISC-Lizenz), über cdnjs.
+- **Software:** [D3.js](https://d3js.org) (© Mike Bostock, ISC-Lizenz, siehe `vendor/D3-LICENSE.txt`), Version 7.9.0, liegt in `vendor/`, damit die Seite ohne externe Abrufe funktioniert.
 
 Unabhängiges Projekt, von keiner der genannten Stellen herausgegeben oder unterstützt. Themenzuordnung, Indizes und Veränderungen sind eigene Berechnungen.
 

@@ -172,7 +172,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 }
 [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="vendor/d3.min.js"></script>
 <script>
   (function () { let t = null; try { t = localStorage.getItem('bh-theme'); } catch (e) {} if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); })();
 </script>
@@ -351,7 +351,7 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       <li><b>Haushaltsentwurf 2027:</b> Quelle: Deutscher Bundestag (<a href="https://www.bundestag.de" target="_blank" rel="noopener">bundestag.de</a>, heute im bundestag, <a href="https://www.mitmischen.de" target="_blank" rel="noopener">mitmischen.de</a>); ergänzend Bundesrechnungshof (Bericht zum Entwurf 2027, veröffentlicht über Table.Media), KfW Research (Chartbook Bundeshaushalt, August 2026) und der Subventionsbericht der Bundesregierung (berichtet vom VDIV).</li>
       <li><b>Statistisches Bundesamt:</b> Verbraucherpreisindex, Preise nach Bereichen, Medianeinkommen 2025, Konsumausgaben (Laufende Wirtschaftsrechnungen, EVS). © Statistisches Bundesamt (Destatis), 2026, lizenziert unter der <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">Datenlizenz Deutschland – Namensnennung – Version 2.0</a>. Zusammenstellung der Jahreswerte des Verbraucherpreisindex über den Arbeitgeberverband der Versicherungsunternehmen (AGV), EVS-Werte 2018/2023 berichtet vom VDIV.</li>
       <li><b>Eurostat:</b> Medianes Nettoäquivalenzeinkommen 2015–2024 (EU-SILC, Tabelle ilc_di03). Quelle: Eurostat, © Europäische Union, Weiterverwendung gemäß der <a href="https://ec.europa.eu/eurostat/about-us/policies/copyright" target="_blank" rel="noopener">Eurostat-Urheberrechtsrichtlinie</a>. Abgerufen über <a href="https://db.nomics.world" target="_blank" rel="noopener">DBnomics</a>.</li>
-      <li><b>Software:</b> Diagramme mit <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a> (© Mike Bostock, ISC-Lizenz), ausgeliefert über cdnjs. Seite: © 2026 Ferit Sari Tomé, MIT-Lizenz.</li>
+      <li><b>Software:</b> Diagramme mit <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a> (© Mike Bostock, <a href="vendor/D3-LICENSE.txt">ISC-Lizenz</a>), Version 7.9.0, mit der Seite ausgeliefert. Seite: © 2026 Ferit Sari Tomé, MIT-Lizenz.</li>
     </ul>
     <p style="margin-bottom: 0">Diese Seite ist ein unabhängiges Projekt und wird von keiner der genannten Stellen herausgegeben oder unterstützt. Die Aufbereitung (Themenzuordnung, Indizes, Veränderungen) ist eigene Berechnung; Fehler gehen auf uns, nicht auf die Quellen.</p>
   </div>
