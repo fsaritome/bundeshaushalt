@@ -20,14 +20,70 @@
   --cds-chart-grid: #eceae3; --cds-chart-axis: #9a978c; --cds-chart-muted: #c9c6bb; --cds-chart-reference: #8f8c80; --cds-chart-status-critical: #c43c2f;
   --series-1: #2f6fdb; --series-2: #e07b2a; --series-3: #7b4fd1; --series-4: #1aa198; --series-5: #d6458b; --series-6: #8a9a1f; --series-7: #b5651d; --series-8: #4a90a4;
 }
+:root { --color-accent: #2f6fdb; --color-head: rgba(247, 246, 242, .85); color-scheme: light; }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --color-bg: #151513; --color-panel: #1e1e1b; --color-fg: #ecebe6; --color-fg-muted: #a5a399; --color-border-line: #33322d;
     --color-ok: #4cc27a; --color-bad: #ef6b5d;
     --cds-chart-grid: #2c2b27; --cds-chart-axis: #77756c; --cds-chart-muted: #55534b; --cds-chart-reference: #8a887e; --cds-chart-status-critical: #ef6b5d;
     --series-1: #6c9cf0; --series-2: #f0a05a; --series-3: #a585ee; --series-4: #4cc9bf; --series-5: #ee79b0; --series-6: #b3c447; --series-7: #d8904a; --series-8: #78b6c9;
+    --color-accent: #6c9cf0; --color-head: rgba(21, 21, 19, .85); color-scheme: dark;
   }
 }
+:root[data-theme="dark"] {
+  --color-bg: #151513; --color-panel: #1e1e1b; --color-fg: #ecebe6; --color-fg-muted: #a5a399; --color-border-line: #33322d;
+  --color-ok: #4cc27a; --color-bad: #ef6b5d;
+  --cds-chart-grid: #2c2b27; --cds-chart-axis: #77756c; --cds-chart-muted: #55534b; --cds-chart-reference: #8a887e; --cds-chart-status-critical: #ef6b5d;
+  --series-1: #6c9cf0; --series-2: #f0a05a; --series-3: #a585ee; --series-4: #4cc9bf; --series-5: #ee79b0; --series-6: #b3c447; --series-7: #d8904a; --series-8: #78b6c9;
+  --color-accent: #6c9cf0; --color-head: rgba(21, 21, 19, .85); color-scheme: dark;
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Kopfleiste */
+.topbar { position: sticky; top: 0; z-index: 20; background: var(--color-head); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--color-border-line); }
+.topbar-in { max-width: 1100px; margin-inline: auto; padding: 10px clamp(16px, 4vw, 40px); display: flex; align-items: center; gap: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: .95rem; color: var(--color-fg); text-decoration: none; white-space: nowrap; }
+.brand-mark { width: 22px; height: 22px; border-radius: 5px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; padding: 3px; background: var(--color-fg); }
+.brand-mark i { border-radius: 1.5px; }
+.brand-mark i:nth-child(1) { background: var(--series-1); } .brand-mark i:nth-child(2) { background: var(--series-2); }
+.brand-mark i:nth-child(3) { background: var(--series-4); } .brand-mark i:nth-child(4) { background: var(--series-3); }
+.nav { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; mask-image: linear-gradient(90deg, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { font-size: .8125rem; color: var(--color-fg-muted); text-decoration: none; padding: 6px 10px; border-radius: 999px; white-space: nowrap; }
+.nav a:hover { color: var(--color-fg); background: color-mix(in srgb, var(--color-fg) 6%, transparent); }
+.nav a.on { color: var(--color-fg); background: color-mix(in srgb, var(--color-fg) 9%, transparent); }
+.theme { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: 999px; padding: 2px; background: var(--color-panel); flex: none; }
+.theme button { font: inherit; font-size: .75rem; color: var(--color-fg-muted); background: none; border: 0; border-radius: 999px; padding: 4px 9px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.theme button svg { width: 14px; height: 14px; }
+.theme button[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); }
+.theme button:focus-visible, .nav a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+@media (max-width: 640px) { .theme .t-label { display: none; } .brand-text { display: none; } }
+
+/* Kopfbereich */
+.hero { padding: clamp(24px, 6vw, 56px) 0 clamp(8px, 2vw, 16px); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--color-fg-muted); margin-bottom: 14px; }
+.eyebrow::before { content: ""; width: 18px; height: 2px; background: var(--color-accent); border-radius: 2px; }
+.st .hero h1 { font-size: clamp(2rem, 5.5vw, 3.25rem); line-height: 1.08; letter-spacing: -.01em; margin-bottom: 18px; max-width: 18ch; }
+.st .hero .about { font-size: clamp(1rem, 1.6vw, 1.125rem); max-width: 62ch; color: var(--color-fg); }
+.st .hero .credit { margin-bottom: 18px; }
+.st .hero .lede { max-width: 62ch; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 12px 16px; border: 1px solid var(--color-border-line); border-radius: 10px; background: var(--color-panel); margin: 8px 0 0; }
+.toolbar .controls { margin: 0; }
+.toolbar .hint { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+
+/* Abschnitte */
+.st h2.sec { display: flex; align-items: baseline; gap: 12px; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: clamp(1.35rem, 2.6vw, 1.75rem); margin: clamp(40px, 7vw, 72px) 0 6px; padding-top: 18px; border-top: 1px solid var(--color-border-line); scroll-margin-top: 64px; }
+.st h2.sec .num { font-family: var(--font-anthropic-sans); font-size: .8125rem; font-weight: 600; color: var(--color-accent); font-variant-numeric: tabular-nums; min-width: 1.6em; }
+.st .sec-sub { color: var(--color-fg-muted); margin: 0 0 16px; max-width: 70ch; line-height: 1.5; }
+.st .card { border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.st details.methode { border: 1px solid var(--color-border-line); border-radius: 10px; padding: 12px 16px; background: var(--color-panel); }
+.st details.methode summary { font-weight: 600; }
+
+/* Fuß */
+.sitefoot { margin-top: clamp(40px, 7vw, 72px); border-top: 1px solid var(--color-border-line); }
+.sitefoot-in { max-width: 1100px; margin-inline: auto; padding: 24px clamp(16px, 4vw, 40px) 40px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.sitefoot a { color: inherit; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); }
 .page { padding: clamp(16px, 4vw, 40px); }
@@ -96,6 +152,9 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 .st .sel-row .n, .st .sel-row .vj-year { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
 .st td.cell { cursor: pointer; }
 .st td.cell.sel { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+.st .trendlist, .st .fragen { margin: 0; padding-left: 1.3em; line-height: 1.55; }
+.st .trendlist li, .st .fragen li { margin-bottom: var(--cds-gap-sm); }
+.st .trendlist b { font-variant-numeric: tabular-nums; }
 .st .foot { margin-top: var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .st .pos { color: var(--color-ok); }
 .st .tablewrap { overflow: auto; max-height: 36rem; }
@@ -114,17 +173,44 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
 [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+  (function () { let t = null; try { t = localStorage.getItem('bh-theme'); } catch (e) {} if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); })();
+</script>
 <script src="dash-shim.js"></script>
 </head>
 <body>
-<main class="page">
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#top" aria-label="Zum Anfang"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-text">Bundeshaushalt</span></a>
+    <nav class="nav" aria-label="Abschnitte">
+      <a href="#gestapelt">Überblick</a>
+      <a href="#themen">Themen</a>
+      <a href="#veraenderung">Veränderung</a>
+      <a href="#median">Einkommen &amp; Preise</a>
+      <a href="#tabelle">Alle Zahlen</a>
+      <a href="#trends">Trends</a>
+      <a href="#fragen">Fragen</a>
+      <a href="#lizenzen">Quellen</a>
+    </nav>
+    <div class="theme" role="group" aria-label="Darstellung">
+      <button type="button" data-theme-set="auto" title="Wie das System"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></svg><span class="t-label">Auto</span></button>
+      <button type="button" data-theme-set="light" title="Hell"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1"/></g></svg><span class="t-label">Hell</span></button>
+      <button type="button" data-theme-set="dark" title="Dunkel"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/></svg><span class="t-label">Dunkel</span></button>
+    </div>
+  </div>
+</header>
+<main class="page" id="top">
 
 <div class="st" lang="de">
-  <h1>Wohin fließt das Geld des Bundes?</h1>
-  <p class="about">Diese Seite macht den Bundeshaushalt nachprüfbar. Sie zeigt alle Ausgaben des Bundes von 2015 bis 2026, geplant und tatsächlich, aufgeteilt nach Themen, und stellt sie dem mittleren Einkommen, den Preisen und den Ausgaben der Haushalte gegenüber. Alle Zahlen stammen aus amtlichen Quellen (Bundesfinanzministerium, Statistisches Bundesamt, Eurostat) und sind unten einzeln verlinkt.</p>
-  <p class="credit">Gestaltet von Ferit Sari Tomé zusammen mit Claude</p>
-  <p class="lede">Alles ist antippbar. Grün heißt gestiegen, Rot heißt gesunken, das ist keine Bewertung. 2015 plante der Bund <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2015">—</b>, 2026 sind es <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2026">—</b>.</p>
+  <section class="hero">
+    <div class="eyebrow">Bundeshaushalt 2015–2026 · amtliche Daten</div>
+    <h1>Wohin fließt das Geld des Bundes?</h1>
+    <p class="about">Diese Seite macht den Bundeshaushalt nachprüfbar. Sie zeigt alle Ausgaben des Bundes von 2015 bis 2026, geplant und tatsächlich, aufgeteilt nach Themen, und stellt sie dem mittleren Einkommen, den Preisen und den Ausgaben der Haushalte gegenüber. Alle Zahlen stammen aus amtlichen Quellen (Bundesfinanzministerium, Statistisches Bundesamt, Eurostat) und sind unten einzeln verlinkt.</p>
+    <p class="credit">Gestaltet von Ferit Sari Tomé zusammen mit Claude</p>
+    <p class="lede">2015 plante der Bund <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2015">—</b>, 2026 sind es <b data-draw="v" data-source="jahre" data-field="ausgaben_soll" data-where="jahr=2026">—</b>. Alles ist antippbar. Grün heißt gestiegen, Rot heißt gesunken, das ist keine Bewertung.</p>
+  </section>
 
+  <div class="toolbar">
   <div class="controls">
     <label>Werte
       <select class="dash-select sel-wert" aria-label="Werte">
@@ -139,8 +225,11 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       </select>
     </label>
   </div>
+  <span class="hint">Gilt für die Abschnitte 1, 2, 3 und 5.</span>
+  </div>
 
-  <h2 id="gestapelt">1 · Alle Jahre gestapelt</h2>
+  <h2 class="sec" id="gestapelt"><span class="num">01</span>Alle Jahre gestapelt</h2>
+  <p class="sec-sub">Wie groß der Haushalt in jedem Jahr war und wie er sich auf die Themen verteilt.</p>
   <div class="card">
     <h3>Ausgaben je Jahr nach Thema</h3>
     <p class="note">Alle 19 Themen einzeln, sortiert nach Größe. Tippe auf ein Thema in der Legende, um es hervorzuheben, oder auf ein Balkenstück für die genaue Zahl.</p>
@@ -149,7 +238,8 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="detail" data-source="stapel">—</div>
   </div>
 
-  <h2 id="themen">2 · Jedes Thema über alle Jahre</h2>
+  <h2 class="sec" id="themen"><span class="num">02</span>Jedes Thema über alle Jahre</h2>
+  <p class="sec-sub">Der Verlauf jedes einzelnen Themas, Jahr für Jahr.</p>
   <div class="card">
     <h3>Ein Thema pro Zeile, die Jahre nebeneinander</h3>
     <p class="note">Mrd. €, sortiert nach dem letzten Jahr. Jede Säule ist ein Jahr, links 2015, rechts das letzte Jahr. Tippe auf eine Säule für die genaue Zahl. Grüne Säule = mehr als im Vorjahr, rote Säule = weniger. „Eigene Skala“ zeigt den Verlauf jedes Themas, „Gleiche Skala“ zeigt, wie groß die Themen im Vergleich sind.</p>
@@ -164,7 +254,8 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div data-draw="multiples" data-source="matrix"></div>
   </div>
 
-  <h2 id="veraenderung">3 · Was sich verändert hat</h2>
+  <h2 class="sec" id="veraenderung"><span class="num">03</span>Was sich verändert hat</h2>
+  <p class="sec-sub">Zuwachs oder Rückgang je Thema zwischen dem ersten und dem letzten Jahr.</p>
   <div class="card">
     <h3>Veränderung je Thema vom ersten zum letzten Jahr</h3>
     <p class="note">Mrd. €. Bei „Geplant“ von 2015 bis 2026, bei „Tatsächlich“ von 2015 bis 2025. Prozent = Veränderung gegenüber 2015. Tippe auf ein Thema für die Werte.</p>
@@ -172,7 +263,8 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="diffdetail" data-source="veraenderung">—</div>
   </div>
 
-  <h2 id="median">4 · Haushalt im Vergleich zum mittleren Einkommen</h2>
+  <h2 class="sec" id="median"><span class="num">04</span>Haushalt im Vergleich zum mittleren Einkommen</h2>
+  <p class="sec-sub">Bundesausgaben, Steuern, Einkommen und Preise nebeneinander, und was ein Haushalt im Monat ausgibt.</p>
   <div class="card">
     <h3>Wie stark ist was seit 2015 gewachsen?</h3>
     <p class="note">Index, 2015 = 100, tatsächliche Werte (unabhängig vom Schalter oben). Mittleres Einkommen = Median des Nettoäquivalenzeinkommens: Die Hälfte der Menschen in Deutschland hat mehr, die Hälfte weniger, nach Steuern und Abgaben und gewichtet nach Haushaltsgröße. (Median statt Durchschnitt: Der Durchschnitt liegt deutlich höher, weil wenige sehr hohe Einkommen ihn nach oben ziehen. Der Median zeigt, was ein typischer Mensch hat.) Preise = Verbraucherpreisindex.</p>
@@ -210,7 +302,8 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="konsumdetail" data-source="konsum">—</div>
   </div>
 
-  <h2 id="tabelle">5 · Alle Zahlen</h2>
+  <h2 class="sec" id="tabelle"><span class="num">05</span>Alle Zahlen</h2>
+  <p class="sec-sub">Jedes Thema in jedem Jahr als Tabelle zum Nachschlagen.</p>
   <div class="card">
     <h3>Jedes Thema in jedem Jahr</h3>
     <p class="note">Mrd. €. Grün = gegenüber 2015 gewachsen, Rot = geschrumpft, je kräftiger, desto stärker. Seitlich wischen für alle Jahre, tippe auf eine Zahl für Details.</p>
@@ -218,15 +311,60 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
     <div class="detail" data-draw="matrixdetail" data-source="matrix">—</div>
   </div>
 
-  <details>
-    <summary>Quellen und Methode</summary>
+  <h2 class="sec" id="trends"><span class="num">06</span>Trends auf einen Blick</h2>
+  <p class="sec-sub">Die auffälligsten Entwicklungen in wenigen Sätzen, aus den Daten berechnet.</p>
+  <div class="card">
+    <h3>Was die Zahlen von 2015 bis 2025 zeigen</h3>
+    <p class="note">Tatsächliche Werte (Ist), unabhängig vom Schalter oben, direkt aus den Daten dieser Seite berechnet. Beschreibung, keine Bewertung.</p>
+    <ul class="trendlist" data-draw="trends" data-source="trends"></ul>
+  </div>
+
+  <h2 class="sec" id="fragen"><span class="num">07</span>Fragen zum Weiterdenken</h2>
+  <p class="sec-sub">Zahlen beantworten nicht, was richtig ist. Diese Fragen helfen beim Einordnen.</p>
+  <div class="card">
+    <h3>Fragen, die man sich selbst stellen kann</h3>
+    <p class="note">Keine dieser Fragen hat eine richtige Antwort. Sie helfen, die Zahlen einzuordnen, bevor man sich eine Meinung bildet.</p>
+    <ol class="fragen">
+      <li>Welcher Teil der Ausgaben ist durch Gesetze festgelegt (etwa Rentenzuschüsse oder Zinsen), und über wie viel entscheidet der Bundestag jedes Jahr wirklich neu?</li>
+      <li>Wenn ein Thema wächst: Liegt es an mehr Menschen, die Anspruch haben, an höheren Preisen oder an neuen Aufgaben?</li>
+      <li>Welcher Maßstab ist fair: Euro, Euro pro Kopf, Anteil an der Wirtschaftsleistung oder nach Abzug der Inflation? Ändert sich mein Eindruck je nach Maßstab?</li>
+      <li>Welche Ausgaben laufen außerhalb dieses Kernhaushalts, zum Beispiel über Sondervermögen, und wie würde das Bild mit ihnen aussehen?</li>
+      <li>Kredite verteilen Kosten über die Zeit. Für welche Ausgaben halte ich das für angemessen, für welche nicht, und warum?</li>
+      <li>Woran ließe sich erkennen, ob eine Ausgabe ihr Ziel erreicht? Wer prüft das heute?</li>
+      <li>Wenn ich ein Thema kürzen oder erhöhen würde: Wen beträfe das, und was müsste dafür woanders passieren?</li>
+      <li>Welche Zahl auf dieser Seite hat mich überrascht, und habe ich sie in der verlinkten Quelle selbst nachgeprüft?</li>
+    </ol>
+  </div>
+
+  <h2 class="sec" id="lizenzen"><span class="num">08</span>Quellen und Lizenzen</h2>
+  <p class="sec-sub">Woher jede Zahl kommt und wie sie berechnet wurde.</p>
+  <details class="methode">
+    <summary>Methode und Einzelnachweise</summary>
     <p>Alle Haushaltszahlen stammen aus den amtlichen Haushaltsplänen (Soll) und Haushaltsrechnungen (Ist) des Bundesfinanzministeriums, Kernhaushalt ohne Sondervermögen. Das mittlere Einkommen stammt aus der amtlichen Erhebung EU-SILC (Eurostat, Tabelle ilc_di03, für 2025 Destatis), Preise aus dem Verbraucherpreisindex, Haushaltsausgaben aus den Laufenden Wirtschaftsrechnungen und der EVS des Statistischen Bundesamts. Themen = Zusammenfassung des amtlichen Funktionenplans; jeder Euro zählt genau einmal. Das Kindergeld erscheint nicht als Ausgabe, weil es über die Steuer verrechnet wird.</p>
     <div class="tablewrap" data-draw="belegtab" data-source="belege"></div>
   </details>
-  <p class="foot">Gestaltet von Ferit Sari Tomé zusammen mit Claude. Daten: Bundesfinanzministerium, Statistisches Bundesamt, Eurostat.</p>
+  <div class="card note" style="margin: 16px 0 0">
+    <p style="margin-top: 0">Wir danken allen, deren Daten und Arbeit diese Seite möglich machen. Jede Zahl ist oben unter „Quellen und Methode“ einzeln verlinkt.</p>
+    <ul style="padding-left: 1.2em; margin: 0">
+      <li><b>Bundeshaushalt (Soll und Ist):</b> Quelle: Bundesministerium der Finanzen, <a href="https://www.bundeshaushalt.de" target="_blank" rel="noopener">bundeshaushalt.de</a> (Haushaltspläne und Haushaltsrechnungen 2015–2026). Gesamtsumme 2026 abgeglichen mit dem Haushaltsgesetz 2026 (<a href="https://www.gesetze-im-internet.de/hg_2026/anlage.html" target="_blank" rel="noopener">gesetze-im-internet.de</a>, Bundesministerium der Justiz).</li>
+      <li><b>Aufbereitung der amtlichen Dateien:</b> Die Originaldateien wurden über das offene Projekt <a href="https://github.com/eis2k/Bundeshaushaltstracker" target="_blank" rel="noopener">Bundeshaushaltstracker</a> (eis2k) bezogen, das sie mit Prüfsummen festhält. Vielen Dank dafür.</li>
+      <li><b>Haushaltsentwurf 2027:</b> Quelle: Deutscher Bundestag (<a href="https://www.bundestag.de" target="_blank" rel="noopener">bundestag.de</a>, heute im bundestag, <a href="https://www.mitmischen.de" target="_blank" rel="noopener">mitmischen.de</a>); ergänzend Bundesrechnungshof (Bericht zum Entwurf 2027, veröffentlicht über Table.Media), KfW Research (Chartbook Bundeshaushalt, August 2026) und der Subventionsbericht der Bundesregierung (berichtet vom VDIV).</li>
+      <li><b>Statistisches Bundesamt:</b> Verbraucherpreisindex, Preise nach Bereichen, Medianeinkommen 2025, Konsumausgaben (Laufende Wirtschaftsrechnungen, EVS). © Statistisches Bundesamt (Destatis), 2026, lizenziert unter der <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">Datenlizenz Deutschland – Namensnennung – Version 2.0</a>. Zusammenstellung der Jahreswerte des Verbraucherpreisindex über den Arbeitgeberverband der Versicherungsunternehmen (AGV), EVS-Werte 2018/2023 berichtet vom VDIV.</li>
+      <li><b>Eurostat:</b> Medianes Nettoäquivalenzeinkommen 2015–2024 (EU-SILC, Tabelle ilc_di03). Quelle: Eurostat, © Europäische Union, Weiterverwendung gemäß der <a href="https://ec.europa.eu/eurostat/about-us/policies/copyright" target="_blank" rel="noopener">Eurostat-Urheberrechtsrichtlinie</a>. Abgerufen über <a href="https://db.nomics.world" target="_blank" rel="noopener">DBnomics</a>.</li>
+      <li><b>Software:</b> Diagramme mit <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a> (© Mike Bostock, ISC-Lizenz), ausgeliefert über cdnjs. Seite: © 2026 Ferit Sari Tomé, MIT-Lizenz.</li>
+    </ul>
+    <p style="margin-bottom: 0">Diese Seite ist ein unabhängiges Projekt und wird von keiner der genannten Stellen herausgegeben oder unterstützt. Die Aufbereitung (Themenzuordnung, Indizes, Veränderungen) ist eigene Berechnung; Fehler gehen auf uns, nicht auf die Quellen.</p>
+  </div>
+  <p class="foot">Daten: Bundesministerium der Finanzen, Deutscher Bundestag, Statistisches Bundesamt (Destatis), Eurostat; Einzelnachweise oben.</p>
 </div>
 
 </main>
+<footer class="sitefoot">
+  <div class="sitefoot-in">
+    <span>Gestaltet von Ferit Sari Tomé zusammen mit Claude · © 2026 · Code unter <a href="https://github.com/fsaritome/bundeshaushalt/blob/main/LICENSE">MIT-Lizenz</a></span>
+    <span><a href="https://github.com/fsaritome/bundeshaushalt">Quellcode und Daten auf GitHub</a> · <a href="#top">Nach oben</a></span>
+  </div>
+</footer>
 <script>
   const nf1 = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const nf0 = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
@@ -246,6 +384,31 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
   const colored = (text, v) => mk('span', tone(v), text);
   const palette = [...new Set([...dash.colors.slice(0, 8), ...d3.schemeTableau10, ...d3.schemeSet2, ...d3.schemeDark2])];
   const colorOf = (i) => palette[i % palette.length];
+
+  // Hell/Dunkel: Auswahl merken, Serienfarben neu lesen und Grafiken neu zeichnen.
+  const themeButtons = document.querySelectorAll('[data-theme-set]');
+  const readSeries = () => { const css = getComputedStyle(document.documentElement); return [1, 2, 3, 4, 5, 6, 7, 8].map((i) => css.getPropertyValue('--series-' + i).trim() || d3.schemeTableau10[i - 1]); };
+  const applyTheme = (t, save) => {
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); else document.documentElement.removeAttribute('data-theme');
+    if (save) { try { if (t === 'auto') localStorage.removeItem('bh-theme'); else localStorage.setItem('bh-theme', t); } catch (e) {} }
+    themeButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeSet === t)));
+    const s = readSeries();
+    dash.colors.splice(0, s.length, ...s);
+    palette.splice(0, palette.length, ...new Set([...s, ...d3.schemeTableau10, ...d3.schemeSet2, ...d3.schemeDark2]));
+    document.querySelectorAll('.st .c0, .st .c1, .st .c2, .st .c3').forEach((e) => { e.style.background = dash.colors[Number(e.className.slice(1))]; });
+    if (save) dash.setParams({});
+  };
+  let savedTheme = 'auto'; try { savedTheme = localStorage.getItem('bh-theme') || 'auto'; } catch (e) {}
+  themeButtons.forEach((b) => b.addEventListener('click', () => applyTheme(b.dataset.themeSet, true)));
+  applyTheme(savedTheme, false);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!document.documentElement.hasAttribute('data-theme')) applyTheme('auto', true); });
+
+  // Navigation: aktiven Abschnitt markieren.
+  const navLinks = [...document.querySelectorAll('.nav a')];
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) navLinks.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id)); }), { rootMargin: '-30% 0px -60% 0px' });
+    navLinks.forEach((a) => { const s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s); });
+  }
 
   dash.calc('stapel', {
     inputs: ['themen'], title: 'Themen gruppiert',
@@ -316,6 +479,53 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-fami
       themen.forEach((t) => { if (!by.has(t.thema)) by.set(t.thema, { thema: t.thema, name: t.name }); const r = by.get(t.thema); r['s' + t.jahr] = t.soll; if (t.ist != null) r['i' + t.jahr] = t.ist; });
       return [...by.values()];
     }
+  });
+
+  dash.calc('trends', {
+    inputs: ['themen', 'jahre', 'vergleich'], title: 'Trends 2015 bis 2025',
+    description: 'Neutrale Kennzahlen aus den Ist-Werten: größte Veränderungen je Thema, Anteile, Zinsen, Kredite, Steuerdeckung und Realeinkommen.',
+    fn: (themen, jahre, vergleich) => {
+      const A = 2015, B = d3.max(themen.filter((t) => t.ist != null), (t) => t.jahr);
+      const by = new Map();
+      themen.forEach((t) => { if (!by.has(t.thema)) by.set(t.thema, { thema: t.thema, name: t.name, ist: {} }); if (t.ist != null) by.get(t.thema).ist[t.jahr] = t.ist; });
+      const rows = [...by.values()].map((r) => ({ ...r, a: r.ist[A], b: r.ist[B], diff: r.ist[B] - r.ist[A], pct: r.ist[A] ? r.ist[B] / r.ist[A] - 1 : null }));
+      const sumY = (y) => d3.sum(rows, (r) => r.ist[y] || 0);
+      const totA = sumY(A), totB = sumY(B);
+      const byDiff = rows.slice().sort((x, y) => y.diff - x.diff);
+      const byPct = rows.filter((r) => r.a >= 1).sort((x, y) => y.pct - x.pct);
+      const down = rows.filter((r) => r.diff < 0).sort((x, y) => x.diff - y.diff);
+      const top3 = rows.slice().sort((x, y) => y.b - x.b).slice(0, 3);
+      const zins = by.get('zinsen');
+      const zinsMin = zins ? d3.least(Object.entries(zins.ist).map(([y, v]) => ({ y: +y, v })).filter((e) => e.y <= B), (e) => e.v) : null;
+      const ji = jahre.filter((j) => j.jahr >= A && j.jahr <= B && j.ausgaben_ist != null);
+      const kredJahre = ji.filter((j) => j.kredite_ist > 0);
+      const ohneKredit = ji.filter((j) => !(j.kredite_ist > 0)).map((j) => j.jahr);
+      const ja = ji.find((j) => j.jahr === A), jb = ji.find((j) => j.jahr === B);
+      const v19 = vergleich.find((v) => v.jahr === 2019), vB = vergleich[vergleich.length - 1];
+      return { A, B, totA, totB, byDiff, byPct, down, top3, zins, zinsMin, kredJahre, ohneKredit, kredSum: d3.sum(kredJahre, (j) => j.kredite_ist),
+        deckA: ja.steuern_ist / ja.ausgaben_ist, deckB: jb.steuern_ist / jb.ausgaben_ist,
+        real19: v19 && vB ? vB.idx_real / v19.idx_real - 1 : null, realJahr: vB && vB.jahr };
+    }
+  });
+  dash.draw('trends', (el) => {
+    const d = dash.data('trends');
+    el.replaceChildren();
+    if (d.status !== 'ok') return;
+    const t = d.data;
+    const li = (...parts) => { const l = mk('li'); parts.forEach((p) => l.append(typeof p === 'string' ? document.createTextNode(p) : p)); el.append(l); };
+    const B = (s) => mk('b', '', s);
+    const g = t.byDiff[0], g2 = t.byDiff[1];
+    li('Den größten Zuwachs in Euro hatte ', B(g.name), ': ', colored(signed(g.diff), g.diff), ' (' + mrd(g.a) + ' → ' + mrd(g.b) + '), gefolgt von ', B(g2.name), ' mit ', colored(signed(g2.diff), g2.diff), '.');
+    const p = t.byPct[0];
+    li('Am stärksten in Prozent gewachsen ist ', B(p.name), ': ', colored(spct(p.pct), p.pct), ' (' + mrd(p.a) + ' → ' + mrd(p.b) + (p.a < 5 ? ', von kleiner Ausgangsbasis' : '') + ').');
+    if (t.down.length) li('Weniger als ' + t.A + ' ausgegeben wurde ' + t.B + ' für: ', ...t.down.flatMap((r, i) => [i ? ', ' : '', B(r.name), ' (', colored(signed(r.diff), r.diff), ')']), '.');
+    else li('Kein Thema lag ' + t.B + ' unter dem Wert von ' + t.A + '.');
+    const s3a = d3.sum(t.top3, (r) => r.a) / t.totA, s3b = d3.sum(t.top3, (r) => r.b) / t.totB;
+    li('Die drei größten Themen ' + t.B + ' (' + t.top3.map((r) => '„' + r.name + '“').join(', ') + ') machten ', B(pf.format(s3b)), ' aller Ausgaben aus; ' + t.A + ' waren es ' + pf.format(s3a) + '.');
+    if (t.zins && t.zinsMin) li('Die Zinsausgaben sanken von ' + mrd(t.zins.ist[t.A]) + ' (' + t.A + ') auf einen Tiefpunkt von ' + mrd(t.zinsMin.v) + ' (' + t.zinsMin.y + ') und lagen ' + t.B + ' bei ', B(mrd(t.zins.ist[t.B])), '.');
+    if (t.kredJahre.length) li('Von ' + t.A + ' bis ' + t.ohneKredit.filter((y) => y < t.kredJahre[0].jahr).slice(-1)[0] + ' kam der Bund ohne neue Kredite im Kernhaushalt aus. Von ' + t.kredJahre[0].jahr + ' bis ' + t.B + ' kamen insgesamt ', B(mrd(t.kredSum)), ' neue Schulden hinzu (Nettokreditaufnahme), am meisten ' + d3.greatest(t.kredJahre, (j) => j.kredite_ist).jahr + '.');
+    li('Steuereinnahmen deckten ' + t.A + ' ' + pf.format(t.deckA) + ' der Ausgaben, ' + t.B + ' ', B(pf.format(t.deckB)), '. Den Rest decken Kredite, Rücklagen und sonstige Einnahmen.');
+    if (t.real19 != null) li('Das mittlere Einkommen nach Abzug der Preissteigerung veränderte sich von 2019 bis ' + t.realJahr + ' um ', colored(spct(t.real19), t.real19), ' (Bruch der Einkommensreihe 2020 beachten).');
   });
 
   document.querySelectorAll('.sel-wert').forEach((s) => s.addEventListener('change', () => { picked = null; dash.setParams({ wert: s.value }); }));

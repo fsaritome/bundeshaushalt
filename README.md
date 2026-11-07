@@ -38,6 +38,17 @@ python3 -m http.server
 
 und dann `http://localhost:8000` öffnen.
 
+## Quellen und Lizenzen
+
+- **Bundeshaushalt:** Quelle: Bundesministerium der Finanzen, [bundeshaushalt.de](https://www.bundeshaushalt.de); Abgleich mit dem Haushaltsgesetz 2026 ([gesetze-im-internet.de](https://www.gesetze-im-internet.de/hg_2026/anlage.html)).
+- **Aufbereitung der amtlichen Dateien:** bezogen über das offene Projekt [Bundeshaushaltstracker](https://github.com/eis2k/Bundeshaushaltstracker) (eis2k). Vielen Dank.
+- **Entwurf 2027:** Deutscher Bundestag (bundestag.de, hib, mitmischen.de); ergänzend Bundesrechnungshof (über Table.Media), KfW Research, Subventionsbericht der Bundesregierung (berichtet vom VDIV).
+- **Statistisches Bundesamt:** © Statistisches Bundesamt (Destatis), 2026, [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0). VPI-Jahreswerte zusammengestellt vom AGV, EVS-Werte berichtet vom VDIV.
+- **Eurostat:** ilc_di03 (EU-SILC), © Europäische Union, Weiterverwendung gemäß der [Eurostat-Urheberrechtsrichtlinie](https://ec.europa.eu/eurostat/about-us/policies/copyright); abgerufen über [DBnomics](https://db.nomics.world).
+- **Software:** [D3.js](https://d3js.org) (© Mike Bostock, ISC-Lizenz), über cdnjs.
+
+Unabhängiges Projekt, von keiner der genannten Stellen herausgegeben oder unterstützt. Themenzuordnung, Indizes und Veränderungen sind eigene Berechnungen.
+
 ## Lizenz
 
-Code: MIT, © 2026 Ferit Sari Tomé. Die Daten stammen aus amtlichen Quellen und unterliegen deren Nutzungsbedingungen.
+Code: MIT, © 2026 Ferit Sari Tomé. Die Daten stammen aus den oben genannten Quellen und unterliegen deren Nutzungsbedingungen.
